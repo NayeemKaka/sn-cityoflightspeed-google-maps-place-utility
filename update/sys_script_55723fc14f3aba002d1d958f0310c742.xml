@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Submit GoogleMapsSearch</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	var apiKey = getApiKey();
+	var srchType = current.googlemaps_request_type;
+	
+	try {
+		var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.GoogleMaps', srchType);
+		if (srchType == 'getDetails') {
+			r.setStringParameterNoEscape('placeid', current.place_id);
+			r.setStringParameterNoEscape('key', apiKey);
+		} else {
+			r.setStringParameterNoEscape('radius', current.radius);
+			r.setStringParameterNoEscape('key', apiKey);
+			r.setStringParameterNoEscape('location', current.location);
+			r.setStringParameterNoEscape('type', current.type);
+		}
+		
+		//override authentication profile
+		//authentication type ='basic'/ 'oauth2'
+		//r.setAuthentication(authentication type, profile name);
+		
+		var response = r.execute();
+		var responseBody = response.getBody();
+		var httpStatus = response.getStatusCode();
+		
+		current.returned_raw_data = responseBody;
+		current.discovery_places_count = (responseBody.match(/place_id/g) || []).length;
+	//	current.place_id_array = loadPlace_ids(responseBody, current.cache_discovery_places_count);
+		
+		current.result = 'Success';
+	}
+	catch(ex) {
+		var message = ex.getMessage();
+		current.returned_raw_data = message;
+		current.result = 'Failed';
+	}
+	
+	current.update();
+	
+})(current, previous);
+
+function getApiKey() {
+	var Key = gs.getProperty("x_snc_googlemaps_p.googlekey") + '';
+	if (Key == "") {
+		gs.addErrorMessage("There was no API key, please check the Googlekey property");
+		return;
+	}
+	return Key;
+}
+
+function loadPlace_ids(responseData, max_count) {
+	var parser = new JSONParser();
+    var parsedD = parser.parse(responseData);
+	var arr = [];
+	for(var i=0;i<max_count;i++) {
+		arr.push(parsedD.results[i].place_id);
+	}
+	return arr;
+}
+
+]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-05-16 19:11:15</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>55723fc14f3aba002d1d958f0310c742</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Submit GoogleMapsSearch</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_script_55723fc14f3aba002d1d958f0310c742</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-05-16 19:18:31</sys_updated_on>
+        <template/>
+        <when>async</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=55723fc14f3aba002d1d958f0310c742"/>
+</record_update>
