@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
     <element label="GoogleMaps Place Utility" max_length="40" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" type="collection">
-        <element label="Discovery comments" max_length="1000" name="discovery_comments" type="string"/>
+        <element label="Discovery comments" mandatory="true" max_length="1000" name="discovery_comments" type="string"/>
         <element label="Discovery places count" max_length="40" name="discovery_places_count" read_only="true" type="integer"/>
         <element choice="1" label="GoogleMaps request type" max_length="40" name="googlemaps_request_type" type="choice">
             <choice>
