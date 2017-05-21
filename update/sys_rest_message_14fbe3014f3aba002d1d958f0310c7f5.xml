@@ -14,7 +14,7 @@
         <sys_class_name>sys_rest_message</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-05-16 18:41:27</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>14fbe3014f3aba002d1d958f0310c7f5</sys_id>
         <sys_mod_count>2</sys_mod_count>
         <sys_name>GoogleMaps</sys_name>

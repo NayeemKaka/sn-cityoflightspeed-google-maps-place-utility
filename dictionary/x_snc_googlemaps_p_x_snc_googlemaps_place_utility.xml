@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
     <element label="GoogleMaps Place Utility" max_length="40" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" type="collection">
-        <element label="Discovery comments" mandatory="true" max_length="1000" name="discovery_comments" type="string"/>
+        <element label="Discovery comments" max_length="1000" name="discovery_comments" type="string"/>
         <element label="Discovery places count" max_length="40" name="discovery_places_count" read_only="true" type="integer"/>
+        <element label="Event Count" max_length="40" name="event_count" read_only="true" type="integer"/>
         <element choice="1" label="GoogleMaps request type" max_length="40" name="googlemaps_request_type" type="choice">
             <choice>
                 <element hint="radarsearch returns place_id and location only (200 max)" label="radarsearch - radarsearch returns place_id and location only (200 max)" sequence="100" value="getRadarsearch"/>
@@ -11,15 +12,29 @@
             </choice>
         </element>
         <element label="GoogleMaps URL" max_length="500" name="googlemaps_url" type="url"/>
+        <element label="Json events generated" max_length="40" name="json_events_generated" read_only="true" type="boolean"/>
+        <element label="json Event data" max_length="5000" name="json_event_data" type="string"/>
         <element label="Location" max_length="40" name="location" type="string"/>
         <element label="Next page token" max_length="1000" name="next_page_token" type="string"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
         <element label="Place_id" max_length="40" name="place_id" type="string"/>
         <element label="Place Id array" max_length="8000" name="place_id_array" type="string"/>
-        <element label="Radius" max_length="40" name="radius" type="string"/>
+        <element choice="3" default="48280" label="Radius" max_length="40" name="radius" type="string">
+            <choice>
+                <element label="1 mile (1,609 meters)" sequence="10" value="1609"/>
+                <element label="3 miles (3,218 meters)" sequence="20" value="3218"/>
+                <element label="5 miles (8,046 meters)" sequence="30" value="8046"/>
+                <element label="10 miles (16,093 meters)" sequence="40" value="16093"/>
+                <element label="20 miles (32,186 miles)" sequence="50" value="32186"/>
+                <element label="30 miles (max 50,000 meters)" sequence="100" value="48280"/>
+            </choice>
+        </element>
         <element label="Result" max_length="40" name="result" read_only="true" type="string"/>
+        <element label="Returned events json" max_length="5000" name="returned_events_json" type="string"/>
         <element label="Returned raw data" max_length="100000" name="returned_raw_data" type="string"/>
-        <element label="Type" max_length="32" name="type" reference="x_snc_googlemaps_p_ii_googlemap_site_types" type="reference"/>
+        <element label="Sites Created" max_length="40" name="sites_created" read_only="true" type="integer"/>
+        <element label="Sites_updated" max_length="40" name="sites_updated" read_only="true" type="integer"/>
+        <element label="Type" max_length="32" name="type" reference="x_snc_guide_site_type" type="reference"/>
         <element label="Use location from googlemaps URL" max_length="40" name="use_location_from_googlemaps_url" type="boolean"/>
         <index name="index">
             <element name="type"/>

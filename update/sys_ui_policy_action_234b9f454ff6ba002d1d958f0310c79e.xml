@@ -7,7 +7,7 @@
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-05-16 17:27:41</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>234b9f454ff6ba002d1d958f0310c79e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>radius</sys_name>

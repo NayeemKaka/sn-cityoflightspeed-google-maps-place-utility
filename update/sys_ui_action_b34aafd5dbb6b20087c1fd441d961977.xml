@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <comments>Refresh City Site records from the returned data.</comments>
+        <condition>current.result=='Success' &amp;&amp; current.sites_created==0 &amp;&amp;	 current.googlemaps_request_type==' getPlaceNearbysearch'</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <hint/>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <name>Refresh City Sites</name>
+        <onclick/>
+        <order>-500</order>
+        <script><![CDATA[// Json convert can't be called from scope so ..
+// going through global.GoogleMapsUtils()
+
+// get the place_id count
+var place_count = 0;
+var place_count = (current.returned_raw_data.match(/place_id/g) || []).length;
+var created_count = 0;
+var updated_count = 0;
+
+// convert the data back to json for parsing
+var cnvt = new global.GoogleMapsUtils();
+var jsonData = cnvt.convert(current.returned_raw_data);
+
+//Loop through the data and create or update the sites
+//depending on place_id
+
+for(var i=0;i<place_count;i++) {
+	var lkup = new GlideRecord('x_snc_guide_site');
+	lkup.addQuery('g_place_id', jsonData.results[i].place_id);
+	lkup.setLimit(1);
+	lkup.query();
+	lkup.next();
+	if (lkup.sys_id) {
+		lkup.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Query number: ' + current.number;
+		lkup.type = current.type;
+		lkup.location = jsonData.results[i].vicinity;
+		lkup.name = jsonData.results[i].name;
+		// google added fields
+		lkup.g_name = jsonData.results[i].name;
+		lkup.g_place_id = jsonData.results[i].place_id;
+		lkup.g_location = jsonData.results[i].geometry.location.lat + ',' + jsonData.results[i].geometry.location.lng;
+		lkup.g_ratings = jsonData.results[i].rating;
+		lkup.g_price_level = jsonData.results[i].price_level;
+		lkup.g_vicinity = jsonData.results[i].vicinity;
+		lkup.g_types = jsonData.results[i].types.toString();
+		lkup.g_icon = jsonData.results[i].icon;
+		
+		lkup.update();
+		updated_count++;
+	} else {
+		var gr = new GlideRecord('x_snc_guide_site');
+		gr.initialize();
+		gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Query number: ' + current.number;
+		gr.type = current.type;
+		gr.location = jsonData.results[i].vicinity;
+		gr.name = jsonData.results[i].name;
+		// google added fields
+		gr.g_name = jsonData.results[i].name;
+		gr.g_place_id = jsonData.results[i].place_id;
+		gr.g_location = jsonData.results[i].geometry.location.lat + ',' + jsonData.results[i].geometry.location.lng;
+		gr.g_ratings = jsonData.results[i].rating;
+		gr.g_price_level = jsonData.results[i].price_level;
+		gr.g_vicinity = jsonData.results[i].vicinity;
+		gr.g_types = jsonData.results[i].types.toString();
+		gr.g_icon = jsonData.results[i].icon;
+		
+		gr.insert();
+		created_count++;
+	}
+}
+
+//Update the GoogleMap Place query record .. and on to the next!
+current.sites_created = created_count;
+current.sites_updated = updated_count;
+current.update();
+
+]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-05-17 13:12:35</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b34aafd5dbb6b20087c1fd441d961977</sys_id>
+        <sys_mod_count>50</sys_mod_count>
+        <sys_name>Refresh City Sites</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_ui_action_b34aafd5dbb6b20087c1fd441d961977</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-05-19 10:01:19</sys_updated_on>
+        <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

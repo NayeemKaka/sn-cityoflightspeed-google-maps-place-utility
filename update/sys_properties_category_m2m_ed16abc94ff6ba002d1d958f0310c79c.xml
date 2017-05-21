@@ -7,7 +7,7 @@
         <sys_class_name>sys_properties_category_m2m</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-05-16 18:14:32</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>ed16abc94ff6ba002d1d958f0310c79c</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>google.maps.key.GoogleMaps Place Properties</sys_name>

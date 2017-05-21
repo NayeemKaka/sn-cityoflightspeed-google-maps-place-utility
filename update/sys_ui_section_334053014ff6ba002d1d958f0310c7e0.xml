@@ -4,56 +4,112 @@
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>number</element>
             <position>0</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-05-16 18:39:24</sys_created_on>
-            <sys_id>65cba3014f3aba002d1d958f0310c713</sys_id>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>861a483edb7e360087c1fd441d96190f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 18:39:24</sys_updated_on>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>.split</element>
-            <position>1</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-05-16 18:39:24</sys_created_on>
-            <sys_id>3dcba3014f3aba002d1d958f0310c713</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 18:39:24</sys_updated_on>
-            <sys_user/>
-            <type>.split</type>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
             <element>result</element>
-            <position>2</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-05-16 18:39:24</sys_created_on>
-            <sys_id>bdcba3014f3aba002d1d958f0310c713</sys_id>
+            <position>1</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>0a1a483edb7e360087c1fd441d96190f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 18:39:24</sys_updated_on>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>discovery_places_count</element>
-            <position>3</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-05-16 18:39:24</sys_created_on>
-            <sys_id>31cba3014f3aba002d1d958f0310c714</sys_id>
+            <position>2</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>8a1a483edb7e360087c1fd441d96190f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 18:39:24</sys_updated_on>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>3</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>0e1a483edb7e360087c1fd441d96190f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sites_created</element>
+            <position>4</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>8e1a483edb7e360087c1fd441d96190f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sites_updated</element>
+            <position>5</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>021a483edb7e360087c1fd441d961910</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>json_events_generated</element>
+            <position>6</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>821a483edb7e360087c1fd441d961910</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>event_count</element>
+            <position>7</position>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-21 12:42:45</sys_created_on>
+            <sys_id>061a483edb7e360087c1fd441d961910</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" sys_domain="global" view="Default view">334053014ff6ba002d1d958f0310c7e0</sys_ui_section>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -65,11 +121,11 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-05-16 16:39:24</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>334053014ff6ba002d1d958f0310c7e0</sys_id>
-            <sys_mod_count>0</sys_mod_count>
+            <sys_mod_count>12</sys_mod_count>
             <sys_name>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</sys_name>
             <sys_overrides/>
             <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -77,8 +133,8 @@
             <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
             <sys_update_name>sys_ui_section_334053014ff6ba002d1d958f0310c7e0</sys_update_name>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 16:39:24</sys_updated_on>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-21 12:42:45</sys_updated_on>
             <sys_user/>
             <title>true</title>
             <view display_value="Default view" name="NULL">Default view</view>
