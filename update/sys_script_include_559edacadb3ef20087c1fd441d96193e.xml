@@ -99,6 +99,7 @@ MapScriptInclude.prototype = {
 		var ret_sys_id = 'false';
 		var gs = new GlideRecord('x_snc_guide_site');
 		gs.addQuery('g_place_id', p_id);
+//TEMP until Site and Event testing is over <------------------------ *
 		// gs.addQuery('state', 'Published');
 		// gs.addQuery('active', 'true');
 		gs.query();
@@ -117,6 +118,7 @@ MapScriptInclude.prototype = {
 			var lkupPlaceId = sites_to_check[sc].placeID;
 			var gr = new GlideRecord('x_snc_guide_site');
 			gr.addQuery('g_place_id',sites_to_check[sc].placeID );
+	//TEMP until Site and Event testing is over <------------------------ *		
 			//gr.addQuery('state', 'Published');
 			//gr.addQuery('active', 'true');
 			gr.query();
@@ -151,7 +153,7 @@ MapScriptInclude.prototype = {
         <sys_created_on>2017-05-19 15:59:55</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>559edacadb3ef20087c1fd441d96193e</sys_id>
-        <sys_mod_count>34</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name>MapScriptInclude</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy>read</sys_policy>
@@ -159,6 +161,6 @@ MapScriptInclude.prototype = {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_script_include_559edacadb3ef20087c1fd441d96193e</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-19 20:21:47</sys_updated_on>
+        <sys_updated_on>2017-05-22 11:17:24</sys_updated_on>
     </sys_script_include>
 </record_update>

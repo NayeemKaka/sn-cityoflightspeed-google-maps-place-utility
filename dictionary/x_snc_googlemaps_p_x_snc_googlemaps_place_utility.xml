@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
     <element label="GoogleMaps Place Utility" max_length="40" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" type="collection">
+        <element label="Create Events" max_length="40" name="create_events" type="boolean"/>
         <element label="Discovery comments" max_length="1000" name="discovery_comments" type="string"/>
         <element label="Discovery places count" max_length="40" name="discovery_places_count" read_only="true" type="integer"/>
+        <element label="Events created" max_length="40" name="events_created" read_only="true" type="string"/>
         <element label="Event Count" max_length="40" name="event_count" read_only="true" type="integer"/>
         <element choice="1" label="GoogleMaps request type" max_length="40" name="googlemaps_request_type" type="choice">
             <choice>
@@ -15,7 +17,7 @@
         <element label="Json events generated" max_length="40" name="json_events_generated" read_only="true" type="boolean"/>
         <element label="json Event data" max_length="5000" name="json_event_data" type="string"/>
         <element label="Location" max_length="40" name="location" type="string"/>
-        <element label="Next page token" max_length="1000" name="next_page_token" type="string"/>
+        <element label="Next page token" max_length="5000" name="next_page_token" type="string"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
         <element label="Place_id" max_length="40" name="place_id" type="string"/>
         <element label="Place Id array" max_length="8000" name="place_id_array" type="string"/>

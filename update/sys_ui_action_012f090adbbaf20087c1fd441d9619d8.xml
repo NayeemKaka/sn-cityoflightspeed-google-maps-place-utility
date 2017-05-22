@@ -18,7 +18,7 @@
         <list_context_menu>false</list_context_menu>
         <list_link>false</list_link>
         <list_save_with_form_button>false</list_save_with_form_button>
-        <name>Package Nearby Events</name>
+        <name>Return Nearby Events</name>
         <onclick/>
         <order>-600</order>
         <script><![CDATA[//Let's test this bad-boy
@@ -36,18 +36,20 @@ var temp_radius = current.radius;
 var mapScriptInclude = new MapScriptInclude();
 current.json_event_data = mapScriptInclude.getNearbyEvents(lat, lng, temp_type, current.radius);
 
-if (current.json_event_data.length ==0) {
+current.event_count = (current.json_event_data.match(/sys_id/g) || []).length;
+
+if (current.event_count ==0) {
 	current.json_event_data = '0 nearby events for this location, type, and radius.';
+	current.discovery_comments = current.discovery_comments + '\n ** generated json event data (0) **';
 } else {
 	current.json_events_generated = 'true';
-	current.event_count = (current.json_event_data.match(/sys_id/g) || []).length;
-	
+	current.discovery_comments = current.discovery_comments + '\n ** generated json event data (' + current.event_count + ') **';
 }
 
 
 //Update the GoogleMap Place query record .. and on to the next!
 
-current.discovery_comments = current.discovery_comments + '\n ** generated json event data **';
+
 action.setRedirectURL(current);
 current.update();
 
@@ -63,8 +65,8 @@ current.update();
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>012f090adbbaf20087c1fd441d9619d8</sys_id>
-        <sys_mod_count>22</sys_mod_count>
-        <sys_name>Package Nearby Events</sys_name>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>Return Nearby Events</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
@@ -72,7 +74,7 @@ current.update();
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_012f090adbbaf20087c1fd441d9619d8</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-21 12:39:31</sys_updated_on>
+        <sys_updated_on>2017-05-22 14:32:12</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

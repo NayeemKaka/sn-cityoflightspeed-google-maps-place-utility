@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <conditions table="x_snc_googlemaps_p_x_snc_googlemaps_place_utility">locationISNOTEMPTY^EQ<item endquery="false" field="location" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <reverse_if_false>false</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+	//
+	// location field is copied from the googlemaps url above
+	// sometimes it brings back the last ',' .. 
+	// make sure the requestor knows .. because the request will fail.
+	//
+	var frm_location = g_form.getValue('location');
+	var check_last_char = frm_location.charAt(frm_location.length-1);
+	if (!parseInt(check_last_char)) {
+		 g_form.showFieldMsg('location','Check last character. Must be an integer', 'error');
+
+	}
+}]]></script_true>
+        <set_values/>
+        <short_description>if location is filled in .. make sure it's valid</short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-05-21 13:22:51</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>36131c32dbbe360087c1fd441d961923</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>if location is filled in .. make sure it's valid</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_ui_policy_36131c32dbbe360087c1fd441d961923</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-05-21 13:42:52</sys_updated_on>
+        <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_ui_policy>
+</record_update>

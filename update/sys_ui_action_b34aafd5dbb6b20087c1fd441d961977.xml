@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <record_update sys_domain="global" table="sys_ui_action">
     <sys_ui_action action="INSERT_OR_UPDATE">
-        <action_name/>
+        <action_name>sysverb_update_and_stay</action_name>
         <active>true</active>
         <client>false</client>
         <comments>Refresh City Site records from the returned data.</comments>
-        <condition>current.result=='Success' &amp;&amp; current.sites_created==0 &amp;&amp;	 current.googlemaps_request_type==' getPlaceNearbysearch'</condition>
+        <condition>current.result=='Success' &amp;&amp; current.sites_created==0 &amp;&amp; current.googlemaps_request_type=='getPlaceNearbysearch'</condition>
         <form_action>true</form_action>
         <form_button>true</form_button>
         <form_context_menu>false</form_context_menu>
@@ -29,10 +29,16 @@ var place_count = 0;
 var place_count = (current.returned_raw_data.match(/place_id/g) || []).length;
 var created_count = 0;
 var updated_count = 0;
+current.events_created = 0;
 
 // convert the data back to json for parsing
 var cnvt = new global.GoogleMapsUtils();
 var jsonData = cnvt.convert(current.returned_raw_data);
+
+//if there are more results, save the token:
+if (jsonData.next_page_token) {
+	current.next_page_token = jsonData.next_page_token;
+}
 
 //Loop through the data and create or update the sites
 //depending on place_id
@@ -44,6 +50,7 @@ for(var i=0;i<place_count;i++) {
 	lkup.query();
 	lkup.next();
 	if (lkup.sys_id) {
+		//   site found - update record
 		lkup.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Query number: ' + current.number;
 		lkup.type = current.type;
 		lkup.location = jsonData.results[i].vicinity;
@@ -60,7 +67,12 @@ for(var i=0;i<place_count;i++) {
 		
 		lkup.update();
 		updated_count++;
+		// if create events is true .. generate events for this site
+		if (current.create_events) {
+			createEvents(lkup);
+		}
 	} else {
+		//   No site .. creat one
 		var gr = new GlideRecord('x_snc_guide_site');
 		gr.initialize();
 		gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Query number: ' + current.number;
@@ -79,7 +91,12 @@ for(var i=0;i<place_count;i++) {
 		
 		gr.insert();
 		created_count++;
+		// if create events is true .. generate events for this site
+		if (current.create_events) {
+			createEvents(gr);
+		}
 	}
+	
 }
 
 //Update the GoogleMap Place query record .. and on to the next!
@@ -87,6 +104,51 @@ current.sites_created = created_count;
 current.sites_updated = updated_count;
 current.update();
 
+function createEvents(site) {
+	var ev = new GlideRecord('x_snc_guide_event');
+// site 1
+	ev.initialize();
+	ev.name = 'Grand Opening';
+	ev.site = site.sys_id;
+	ev.active = true;
+	ev.cost = '1';
+	ev.description = 'Grand Opening - ** generated from GoogleMaps Utility **';
+	ev.start_date = '2017-05-24 18:48:43';
+	ev.end_date = '2017-06-04 18:48:52';
+	//gr.type = 'Exhibition,Food & Drink,Meet & Mingle';
+	ev.type_list = 'eb106969dbfab20087c1fd441d96196d,53b1e1a9dbfab20087c1fd441d961947,50de1929dbfab20087c1fd441d96198f';
+	ev.insert();
+	current.events_created++;
+	
+// site 2
+	ev.initialize();
+	ev.name = 'New Product Launch';
+	ev.site = site.sys_id;
+	ev.active = true;
+	ev.cost = '2';
+	ev.description = 'New Product Launch- ** generated from GoogleMaps Utility **';
+	ev.start_date = '2017-07-24 18:48:43';
+	ev.end_date = '2017-08-04 18:48:52';
+	//gr.type = 'Seminar/Conference,Food & Drink';
+	ev.type_list = '9db0e969dbfab20087c1fd441d96199c,53b1e1a9dbfab20087c1fd441d961947';
+	ev.insert();
+	current.events_created++;
+	
+// site 3
+	ev.initialize();
+	ev.name = 'Local Music';
+	ev.site = site.sys_id;
+	ev.active = true;
+	ev.cost = '3';
+	ev.description = 'Local Music - ** generated from GoogleMaps Utility **';
+	ev.start_date = '2017-07-24 18:48:43';
+	ev.end_date = '2017-08-04 18:48:52';
+	//gr.type = 'Live Music';
+	ev.type_list = '3e506969dbfab20087c1fd441d9619ac';
+	ev.insert();
+	current.events_created++;
+	
+}
 ]]></script>
         <show_insert>true</show_insert>
         <show_multiple_update>false</show_multiple_update>
@@ -99,7 +161,7 @@ current.update();
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b34aafd5dbb6b20087c1fd441d961977</sys_id>
-        <sys_mod_count>50</sys_mod_count>
+        <sys_mod_count>69</sys_mod_count>
         <sys_name>Refresh City Sites</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -108,7 +170,7 @@ current.update();
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_b34aafd5dbb6b20087c1fd441d961977</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-19 10:01:19</sys_updated_on>
+        <sys_updated_on>2017-05-22 15:03:04</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

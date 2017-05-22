@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <conditions table="x_snc_googlemaps_p_x_snc_googlemaps_place_utility">googlemaps_request_type=getRadarsearch^EQ<item endquery="false" field="googlemaps_request_type" goto="false" newquery="false" operator="=" or="false" value="getRadarsearch"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <reverse_if_false>true</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+var sections = g_form.getSections();
+sections[3].style.display = 'none';
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+var sections = g_form.getSections();
+sections[3].style.display = 'block';
+}]]></script_true>
+        <set_values/>
+        <short_description>Only show Returned Data section if searchtype is Radarsearch</short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-05-22 10:51:26</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8ef9744fdb76760087c1fd441d961928</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Only show Returned Data section if searchtype is Radarsearch</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_ui_policy_8ef9744fdb76760087c1fd441d961928</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-05-22 10:56:50</sys_updated_on>
+        <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_ui_policy>
+</record_update>

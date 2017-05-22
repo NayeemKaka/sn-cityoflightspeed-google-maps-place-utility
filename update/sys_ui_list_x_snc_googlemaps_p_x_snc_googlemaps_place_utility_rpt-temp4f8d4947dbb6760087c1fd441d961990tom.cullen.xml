@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" version="2" view="rpt-temp4f8d4947dbb6760087c1fd441d961990tom.cullen">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>number</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>978d4587dbb6760087c1fd441d96197c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>googlemaps_request_type</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>1b8d4587dbb6760087c1fd441d96197c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>discovery_comments</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>9b8d4587dbb6760087c1fd441d96197c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>result</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>1f8d4587dbb6760087c1fd441d96197c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>discovery_places_count</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>9f8d4587dbb6760087c1fd441d96197c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>sites_created</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>138d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>sites_updated</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>938d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>events_created</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>178d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>event_count</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>978d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>json_event_data</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>9</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>1b8d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>radius</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>10</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>9b8d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>location</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>11</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>1f8d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>place_id</element>
+            <list_id display_value="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" element="NULL" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" parent="NULL" relationship="NULL" sys_domain="global" view="138d4587dbb6760087c1fd441d96197b">138d4587dbb6760087c1fd441d96197c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>12</position>
+            <sum>false</sum>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_id>9f8d4587dbb6760087c1fd441d96197d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-05-22 12:15:58</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>138d4587dbb6760087c1fd441d96197c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name/>
+            <sys_package/>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+            <sys_update_name/>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 12:15:58</sys_updated_on>
+            <sys_user/>
+            <view display_value="Rpt-temp4f8d4947dbb6760087c1fd441d961990tom.cullen" name="rpt-temp4f8d4947dbb6760087c1fd441d961990tom.cullen">138d4587dbb6760087c1fd441d96197b</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>
