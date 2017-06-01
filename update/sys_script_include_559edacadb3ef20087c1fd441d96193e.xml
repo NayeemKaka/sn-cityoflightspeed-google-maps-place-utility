@@ -70,6 +70,26 @@ MapScriptInclude.prototype = {
 			}
 		},
 		
+		getSiteDetails : function (r_place_id) {
+			
+			var apiKey = getApiKey();
+			try {
+				var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.GoogleMaps', 'getDetails');
+				r.setStringParameterNoEscape('placeid', r_place_id);
+				r.setStringParameterNoEscape('key', apiKey);
+				
+				var response = r.execute();
+				var responseBody = response.getBody();
+				var httpStatus = response.getStatusCode();
+				
+				return responseBody;
+				
+			}
+			catch(ex) {
+				var message = ex.getMessage();
+			}
+		},
+		
 		type: 'MapScriptInclude'
 	};
 	
@@ -99,7 +119,7 @@ MapScriptInclude.prototype = {
 		var ret_sys_id = 'false';
 		var gs = new GlideRecord('x_snc_guide_site');
 		gs.addQuery('g_place_id', p_id);
-//TEMP until Site and Event testing is over <------------------------ *
+		//TEMP until Site and Event testing is over <------------------------ *
 		// gs.addQuery('state', 'Published');
 		// gs.addQuery('active', 'true');
 		gs.query();
@@ -118,7 +138,7 @@ MapScriptInclude.prototype = {
 			var lkupPlaceId = sites_to_check[sc].placeID;
 			var gr = new GlideRecord('x_snc_guide_site');
 			gr.addQuery('g_place_id',sites_to_check[sc].placeID );
-	//TEMP until Site and Event testing is over <------------------------ *		
+			//TEMP until Site and Event testing is over <------------------------ *
 			//gr.addQuery('state', 'Published');
 			//gr.addQuery('active', 'true');
 			gr.query();
@@ -126,8 +146,8 @@ MapScriptInclude.prototype = {
 			//   -  split Location
 			var LatLng = [];
 			LatLng = gr.g_location.split(",");
-			var lat = LatLng[0];
-			var lng = LatLng[1];
+			var lat = parseFloat(LatLng[0]);
+			var lng = parseFloat(LatLng[1]);
 			//  -  find events
 			var ev = new GlideRecord('x_snc_guide_event');
 			ev.addQuery('site', gr.sys_id);
@@ -138,7 +158,17 @@ MapScriptInclude.prototype = {
 			while (ev.next()) {
 				count++;
 				total_events++;
-				var eventObj = {name: ev.name.toString(), lat: lat, lng: lng, sys_id: ev.sys_id.toString()};
+				//message = "<b><a href=/guide?id=city_guide_event_details&sys_id="+ev.sys_id.toString()+">"+ev.name.toString() +"</a></b><p><b>Start Date: </b>"+ev.start_date.toString()+"</p><p><b>End Date: </b>"+ev.end_date.toString()+"</p>";
+				 message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start: </b>2017-09-26 07:00:00</p><p><b>End: </b>2017-09-27 00:00:00</p></div></div>';
+				var types = [];
+				var eventTypeGr = new GlideRecord('x_snc_guide_m2m_event_types');
+				eventTypeGr.addActiveQuery();
+				eventTypeGr.addQuery('x_event', ev.sys_id.toString());
+				eventTypeGr.query();
+				while (eventTypeGr.next()) {
+					types.push(eventTypeGr.event_type.name.toString());
+				}
+				var eventObj = {name: ev.name.toString(),types:types,message:message, lat: lat, lng: lng, sys_id: ev.sys_id.toString(), start_date: ev.start_date.toString(), end_date: ev.end_date.toString()};
 					our_events.push(eventObj);
 				}
 				
@@ -153,14 +183,14 @@ MapScriptInclude.prototype = {
         <sys_created_on>2017-05-19 15:59:55</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>559edacadb3ef20087c1fd441d96193e</sys_id>
-        <sys_mod_count>35</sys_mod_count>
+        <sys_mod_count>49</sys_mod_count>
         <sys_name>MapScriptInclude</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy>read</sys_policy>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_script_include_559edacadb3ef20087c1fd441d96193e</sys_update_name>
-        <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-22 11:17:24</sys_updated_on>
+        <sys_updated_by>sush.chandrashekar</sys_updated_by>
+        <sys_updated_on>2017-05-26 18:53:01</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -6,7 +6,7 @@
             <element>googlemaps_request_type</element>
             <hint>radarsearch returns place_id and location only (200 max)</hint>
             <inactive>false</inactive>
-            <label>radarsearch - radarsearch returns place_id and location only (200 max)</label>
+            <label>radarsearch - radarsearch returns place_id and location only (200 max) - Sush Request</label>
             <language>en</language>
             <name>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</name>
             <sequence>100</sequence>
@@ -15,9 +15,9 @@
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>b6e29b414ff6ba002d1d958f0310c7ce</sys_id>
-            <sys_mod_count>2</sys_mod_count>
+            <sys_mod_count>4</sys_mod_count>
             <sys_updated_by>tom.cullen</sys_updated_by>
-            <sys_updated_on>2017-05-19 09:32:00</sys_updated_on>
+            <sys_updated_on>2017-05-22 19:05:13</sys_updated_on>
             <value>getRadarsearch</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -25,7 +25,7 @@
             <element>googlemaps_request_type</element>
             <hint>nearbysearch returns establishment details (60 max)</hint>
             <inactive>false</inactive>
-            <label>nearbysearch -nearbysearch returns establishment details (60 max)</label>
+            <label>nearbysearch - nearbysearch returns establishment details (60 max)  - Generate Sites and Events</label>
             <language>en</language>
             <name>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</name>
             <sequence>200</sequence>
@@ -34,9 +34,9 @@
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>1d23db414ff6ba002d1d958f0310c7f7</sys_id>
-            <sys_mod_count>1</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 16:52:54</sys_updated_on>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 19:04:32</sys_updated_on>
             <value>getPlaceNearbysearch</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -44,7 +44,7 @@
             <element>googlemaps_request_type</element>
             <hint>details returns details on a specifice place_id (max 1)</hint>
             <inactive>false</inactive>
-            <label>details -details returns details on a specifice place_id (max 1)</label>
+            <label>details - details returns details on a specifice place_id (max 1)  - Site deep dive</label>
             <language>en</language>
             <name>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</name>
             <sequence>300</sequence>
@@ -53,10 +53,29 @@
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>15739f414ff6ba002d1d958f0310c759</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-05-16 16:53:49</sys_updated_on>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-05-22 19:04:01</sys_updated_on>
             <value>getDetails</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>googlemaps_request_type</element>
+            <hint>Uses Eventbrite API to find events of a specific category in a requested area</hint>
+            <inactive>false</inactive>
+            <label>getEvents - Eventbrite search returns events in the selected category for this location</label>
+            <language>en</language>
+            <name>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</name>
+            <sequence>500</sequence>
+            <sys_created_by>tom.cullen</sys_created_by>
+            <sys_created_on>2017-06-01 16:05:55</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4b4e9596dbc3fa0087c1fd441d96190e</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>tom.cullen</sys_updated_by>
+            <sys_updated_on>2017-06-01 16:07:40</sys_updated_on>
+            <value>getEvents</value>
         </sys_choice>
         <sys_choice_set action="INSERT_OR_UPDATE">
             <element>googlemaps_request_type</element>
@@ -66,7 +85,7 @@
             <sys_created_on>2017-05-16 16:51:32</sys_created_on>
             <sys_customer_update>false</sys_customer_update>
             <sys_id>73e90bd5db76b20087c1fd441d961937</sys_id>
-            <sys_mod_count>6</sys_mod_count>
+            <sys_mod_count>14</sys_mod_count>
             <sys_name>googlemaps_request_type</sys_name>
             <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
             <sys_policy/>
@@ -74,7 +93,7 @@
             <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
             <sys_update_name>sys_choice_x_snc_googlemaps_p_x_snc_googlemaps_place_utility_googlemaps_request_type</sys_update_name>
             <sys_updated_by>tom.cullen</sys_updated_by>
-            <sys_updated_on>2017-05-19 09:32:00</sys_updated_on>
+            <sys_updated_on>2017-06-01 16:07:40</sys_updated_on>
         </sys_choice_set>
     </sys_choice>
 </record_update>

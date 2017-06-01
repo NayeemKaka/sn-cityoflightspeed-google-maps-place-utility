@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_rest_message_fn_param_defs">
+    <sys_rest_message_fn_param_defs action="INSERT_OR_UPDATE">
+        <name>location.longitude</name>
+        <order>300</order>
+        <rest_message_function display_value="getEvents">c244598adb0fba0087c1fd441d9619fd</rest_message_function>
+        <sys_class_name>sys_rest_message_fn_param_defs</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-01 12:31:13</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>fb407c52db83fa0087c1fd441d9619d8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>location.longitude</sys_name>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_rest_message_fn_param_defs_fb407c52db83fa0087c1fd441d9619d8</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-06-01 12:31:13</sys_updated_on>
+        <value>${longitude}</value>
+    </sys_rest_message_fn_param_defs>
+</record_update>

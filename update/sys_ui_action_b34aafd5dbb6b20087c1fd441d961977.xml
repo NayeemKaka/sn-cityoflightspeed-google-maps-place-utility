@@ -31,6 +31,9 @@ var created_count = 0;
 var updated_count = 0;
 current.events_created = 0;
 
+// get our apikey
+//var apiKey = MapScriptInclude().getApikey();
+
 // convert the data back to json for parsing
 var cnvt = new global.GoogleMapsUtils();
 var jsonData = cnvt.convert(current.returned_raw_data);
@@ -64,92 +67,209 @@ for(var i=0;i<place_count;i++) {
 		lkup.g_vicinity = jsonData.results[i].vicinity;
 		lkup.g_types = jsonData.results[i].types.toString();
 		lkup.g_icon = jsonData.results[i].icon;
+		try {
+			lkup.g_photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&key=AIzaSyDr62AUj_P1AnkuJaLNo2vS5x6hJrpC4RY&photoreference=" + jsonData.results[i].photos[0].photo_reference;
+		}
+		catch(err){
+			var message = err;
+		}
 		
 		lkup.update();
 		updated_count++;
-		// if create events is true .. generate events for this site
-		if (current.create_events) {
-			createEvents(lkup);
+		// Do NOT create Events for UPDATE
+		//if (current.create_events) {
+			//	createEvents(lkup);
+			//}
+		} else {
+			//   No site .. creat one
+			var gr = new GlideRecord('x_snc_guide_site');
+			gr.initialize();
+			gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Query number: ' + current.number;
+			gr.type = current.type;
+			gr.location = jsonData.results[i].vicinity;
+			gr.name = jsonData.results[i].name;
+			// google added fields
+			gr.g_name = jsonData.results[i].name;
+			gr.g_place_id = jsonData.results[i].place_id;
+			gr.g_location = jsonData.results[i].geometry.location.lat + ',' + jsonData.results[i].geometry.location.lng;
+			gr.g_ratings = jsonData.results[i].rating;
+			gr.g_price_level = jsonData.results[i].price_level;
+			gr.g_vicinity = jsonData.results[i].vicinity;
+			gr.g_types = jsonData.results[i].types.toString();
+			gr.g_icon = jsonData.results[i].icon;
+			try {
+				gr.g_photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&key=AIzaSyDr62AUj_P1AnkuJaLNo2vS5x6hJrpC4RY&photoreference=" + jsonData.results[i].photos[0].photo_reference;
+				gr.g_photo_from_google = true;
+			}
+			catch(err){
+				// no photo on google ... add "your site here" pic"
+				gr.g_photo_url = "https://www.apnaradio.net/wp-content/uploads/2013/12/yoursite.png";
+			}
+			
+			gr.insert();
+			created_count++;
+			// if create events is true .. generate events for this site
+			if (current.create_events) {
+				createEvents(gr);
+			}
 		}
-	} else {
-		//   No site .. creat one
-		var gr = new GlideRecord('x_snc_guide_site');
-		gr.initialize();
-		gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Query number: ' + current.number;
-		gr.type = current.type;
-		gr.location = jsonData.results[i].vicinity;
-		gr.name = jsonData.results[i].name;
-		// google added fields
-		gr.g_name = jsonData.results[i].name;
-		gr.g_place_id = jsonData.results[i].place_id;
-		gr.g_location = jsonData.results[i].geometry.location.lat + ',' + jsonData.results[i].geometry.location.lng;
-		gr.g_ratings = jsonData.results[i].rating;
-		gr.g_price_level = jsonData.results[i].price_level;
-		gr.g_vicinity = jsonData.results[i].vicinity;
-		gr.g_types = jsonData.results[i].types.toString();
-		gr.g_icon = jsonData.results[i].icon;
 		
-		gr.insert();
-		created_count++;
-		// if create events is true .. generate events for this site
-		if (current.create_events) {
-			createEvents(gr);
-		}
 	}
 	
-}
-
-//Update the GoogleMap Place query record .. and on to the next!
-current.sites_created = created_count;
-current.sites_updated = updated_count;
-current.update();
-
-function createEvents(site) {
-	var ev = new GlideRecord('x_snc_guide_event');
-// site 1
-	ev.initialize();
-	ev.name = 'Grand Opening';
-	ev.site = site.sys_id;
-	ev.active = true;
-	ev.cost = '1';
-	ev.description = 'Grand Opening - ** generated from GoogleMaps Utility **';
-	ev.start_date = '2017-05-24 18:48:43';
-	ev.end_date = '2017-06-04 18:48:52';
-	//gr.type = 'Exhibition,Food & Drink,Meet & Mingle';
-	ev.type_list = 'eb106969dbfab20087c1fd441d96196d,53b1e1a9dbfab20087c1fd441d961947,50de1929dbfab20087c1fd441d96198f';
-	ev.insert();
-	current.events_created++;
+	//Update the GoogleMap Place query record ..
+	current.sites_created = created_count;
+	current.sites_updated = updated_count;
+	current.update();
 	
-// site 2
-	ev.initialize();
-	ev.name = 'New Product Launch';
-	ev.site = site.sys_id;
-	ev.active = true;
-	ev.cost = '2';
-	ev.description = 'New Product Launch- ** generated from GoogleMaps Utility **';
-	ev.start_date = '2017-07-24 18:48:43';
-	ev.end_date = '2017-08-04 18:48:52';
-	//gr.type = 'Seminar/Conference,Food & Drink';
-	ev.type_list = '9db0e969dbfab20087c1fd441d96199c,53b1e1a9dbfab20087c1fd441d961947';
-	ev.insert();
-	current.events_created++;
+	function createEvents(site) {
+		var ev = new GlideRecord('x_snc_guide_event');
+		// event 1
+		ev.initialize();
+		ev.name = site.g_name;
+		ev.site = site.sys_id;
+		ev.active = true;
+		ev.state = 'Active';
+		ev.cost = '1';
+		//		ev.description = site.g_name;  //put the site name first in event description
+		
+		//set event values based upon the site type
+		setEventValues(current.type.getDisplayValue().toLowerCase(), ev);
+		
+		//this code checks to see if discovery found a default(google) photo
+		//if so ..  use this for the event
+		//if not .. add a default people_places_events photo
+		//on an error .. the grand-opening picture will be on the event  (this shouldn't happen)
+		try {
+			if(site.g_photo_from_google) {
+				ev.photo_url = site.g_photo_url;
+			} else {
+				ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+			}
+		}
+		catch(err){
+			ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+		}
+		
+		//insert the Event
+		ev.insert();
+		current.events_created++;
+		
+	}
 	
-// site 3
-	ev.initialize();
-	ev.name = 'Local Music';
-	ev.site = site.sys_id;
-	ev.active = true;
-	ev.cost = '3';
-	ev.description = 'Local Music - ** generated from GoogleMaps Utility **';
-	ev.start_date = '2017-07-24 18:48:43';
-	ev.end_date = '2017-08-04 18:48:52';
-	//gr.type = 'Live Music';
-	ev.type_list = '3e506969dbfab20087c1fd441d9619ac';
-	ev.insert();
-	current.events_created++;
+	function setEventValues(siteType, evRec) {
+		
+		switch (siteType) {
+			case "aquarium":
+			evRec.description = 'Lorem ipsum ornare ac turpis vivamus tempus vel, integer vulputate dictumst porta vivamus ultrices velit fusce, etiam rhoncus placerat cursus sapien hac tempor eros conubia nulla etiam ut lobortis ut urna purus aliquam.';
+			evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'Nature'
+			break;
+			case "art_gallery":
+			evRec.description = 'Fringilla erat integer tristique scelerisque elementum risus sagittis, non habitant aliquam venenatis vulputate molestie torquent diam, gravida convallis pharetra id hac urna justo praesent fusce consequat quisque donec mauris taciti lectus.';
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d';   //type = 'Drama'
+			break;
+			case "bar":
+			evRec.description =  'Sodales feugiat non semper nec metus commodo suspendisse nec, curae luctus nunc ante dapibus ad pellentesque neque nec, habitasse posuere risus fusce erat quisque potenti donec libero hac tortor.';
+			//evRec.type_list = '3e506969dbfab20087c1fd441d9619ac,50de1929dbfab20087c1fd441d96198f,53b1e1a9dbfab20087c1fd441d961947';   //type = ' Music, Sports, Food'
+			evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = '  Food'
+			break;
+			case "cafe":
+			evRec.description = 'Viverra sapien vulputate aptent aliquam diam sollicitudin etiam risus, suspendisse magna molestie lacus pretium iaculis lorem odio, lorem mi dictum diam eget etiam placerat ligula lobortis tortor aptent quisque.';
+			evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = 'Food'
+			break;
+			case "campground":
+			evRec.description = 'Senectus aenean consectetur purus ut curabitur lorem, nam risus habitasse morbi quisque donec libero, habitasse ut aptent a ipsum suscipit sapien feugiat pharetra posuere himenaeos morbi nostra, rhoncus mi aliquet vulputate praesent venenatis iaculis, arcu risus per dictumst hendrerit mauris.';
+			evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'Nature'
+			break;
+			case "casino":
+			evRec.description = 'Sodales nullam vulputate proin suspendisse fermentum dictum himenaeos sagittis, dictum etiam neque malesuada nec mi congue volutpat, mauris class varius vel lacinia egestas lacinia adipiscing libero cras suspendisse aliquam ligula ad.';
+			//evRec.type_list = '3e506969dbfab20087c1fd441d9619ac,50de1929dbfab20087c1fd441d96198f,53b1e1a9dbfab20087c1fd441d961947';   //type = 'exhibition,meet & mingle,live music,seminar-conference,trade show'
+			evRec.type_list = '3e506969dbfab20087c1fd441d9619ac';   //type = 'live music'
+			break;
+			case "food":
+			evRec.description = 'Donec aenean sem primis donec lectus nam ad fusce odio vestibulum commodo neque conubia, tortor cras aenean quis proin sapien hac varius aenean porta pulvinar.';
+			evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = 'food'
+			break;
+			case "library":
+			evRec.description = 'Etiam arcu lacus ornare ante amet felis aenean platea, vivamus nulla imperdiet nec imperdiet tellus ligula, ante class etiam curabitur magna taciti eros aenean odio taciti tellus.';
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d';   //type = 'Drama'
+			break;
+			case "lodging":
+			evRec.description = 'Justo habitant convallis consequat fames vestibulum ligula curabitur, tempor blandit proin vivamus sit venenatis vitae, malesuada lacinia himenaeos duis vitae etiam vulputate massa himenaeos primis felis cras libero nulla id, venenatis amet vel taciti accumsan turpis eleifend.';
+			evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = 'food'
+			break;
+			case "movie_theater":
+			evRec.description = 'Suspendisse dictum ut sed vehicula maecenas tortor pretium dapibus, commodo elementum phasellus turpis vitae felis velit, pellentesque etiam est auctor tempus taciti nec risus molestie tristique augue rutrum litora phasellus mi sem.';
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d';   //type = 'Drama'
+			break;
+			case "museum":
+			evRec.description = 'Lorem ipsum eget molestie ante convallis dictum, eleifend platea himenaeos donec eros, lacus fames ante risus ante.';
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d';   //type = 'Drama'
+			break;
+			case "night_club":
+			evRec.description = 'Quam curabitur tristique dapibus litora lectus urna sed elementum, amet pharetra erat curabitur suspendisse et habitant venenatis, quisque quis fames lacus erat pulvinar dictumst mi praesent at condimentum rhoncus himenaeos lorem amet tempus tincidunt aenean.';
+			evRec.type_list = '3e506969dbfab20087c1fd441d9619ac';   //type = 'Music'
+			break;
+			case "park":
+			evRec.description = 'Placerat ad dictum purus rhoncus risus lacinia hendrerit nam aliquam, eget euismod tempus sit bibendum cubilia mi vestibulum primis dolor at cras praesent dui at malesuada varius, conubia tempor rutrum consectetur molestie ornare luctus porttitor, aliquam consequat nibh odio conubia varius tellus.';
+			evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'Nature'
+			break;
+			case "restaurant":
+			evRec.description = 'Rhoncus vel eleifend pulvinar faucibus fames aliquam urna donec, primis ut leo vel massa adipiscing ut.';
+			evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = 'food '
+			break;
+			case "rv_park":
+			evRec.description = 'Amet mollis erat est felis elit aptent curabitur, dictumst aenean vitae quis nostra et lobortis, curabitur primis vitae tempor tristique tincidunt arcu varius et suscipit maecenas.';
+			evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'nature '
+			break;
+			case "stadium":
+			evRec.description = 'Ut dictum pharetra duis viverra mauris quis pellentesque sagittis tristique metus, ultricies orci bibendum interdum phasellus habitasse habitant pellentesque primis, odio id leo sem ante consectetur imperdiet porta morbi scelerisque ut curae netus pellentesque rutrum ligula curae aliquam pulvinar at vivamus.';
+			evRec.type_list = '50de1929dbfab20087c1fd441d96198f';   //type = 'sports & recreation'
+			break;
+			case "university":
+			evRec.description = 'Nec libero duis quis vitae ligula conubia magna sociosqu habitasse, est rhoncus aenean duis eros primis vivamus vel, euismod diam luctus sapien nullam donec id platea porttitor tempus massa quisque sagittis tincidunt ad sollicitudin fringilla integer.';
+			evRec.type_list = '50de1929dbfab20087c1fd441d96198f';   //type = 'sports'
+			break;
+			case "zoo":
+			evRec.description = 'Cursus pharetra curabitur dictum etiam ut pharetra morbi, ultricies augue aliquam molestie curae himenaeos, eros per netus felis hendrerit tincidunt.';
+			evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'Nature'
+			break;
+			default:
+			evRec.description = 'Pellentesque vivamus turpis aenean rutrum curabitur, ante lacinia ut ultrices taciti felis, at quam est curae.';
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d,53b1e1a9dbfab20087c1fd441d961947,50de1929dbfab20087c1fd441d96198f'; // type = 'Exhibition,Food & Drink,Meet & Mingle'
+			break;
+			
+		}
+		evRec.start_date = getRandomDate();
+		evRec.end_date = getRandomEndDate(evRec.start_date);
+	}
 	
-}
-]]></script>
+	
+	// returns random end date
+	function getRandomEndDate(startDt) {
+		var gdt = new GlideDateTime(startDt);
+		var days = getRandomInt(1, 7);
+		gdt.addDaysLocalTime(days);
+		var end_date = gdt.getDate();
+		return end_date;
+		
+	}
+	// returns a random date.  if less than june ups the year.
+	function getRandomDate() {
+		var month = getRandomInt(1,12);
+		var day = getRandomInt(1,28);
+		var year = '2017';
+		if (month<6) {
+			year = '2018';
+		}
+		mdate = month + '-' + day + '-' + year;
+		return mdate;
+	}
+	// Returns a random integer between min (included) and max (included)
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	
+	]]></script>
         <show_insert>true</show_insert>
         <show_multiple_update>false</show_multiple_update>
         <show_query>false</show_query>
@@ -161,7 +281,7 @@ function createEvents(site) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b34aafd5dbb6b20087c1fd441d961977</sys_id>
-        <sys_mod_count>69</sys_mod_count>
+        <sys_mod_count>109</sys_mod_count>
         <sys_name>Refresh City Sites</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -170,7 +290,7 @@ function createEvents(site) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_b34aafd5dbb6b20087c1fd441d961977</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-22 15:03:04</sys_updated_on>
+        <sys_updated_on>2017-05-25 20:44:07</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
