@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>sysverb_update_and_stay</action_name>
+        <active>true</active>
+        <client>false</client>
+        <comments>Refresh City Site records from the returned data.</comments>
+        <condition>current.result=='Success' &amp;&amp; current.sites_created==0 &amp;&amp; current.googlemaps_request_type=='getEvents'</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <hint/>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <name>Refresh EventBrite Sites and Events</name>
+        <onclick/>
+        <order>-500</order>
+        <script><![CDATA[// Json convert can't be called from scope so ..
+// going through global.GoogleMapsUtils()
+
+// get the place_id count
+var place_count = 0;
+var place_count = (current.returned_raw_data.match(/venue_id/g) || []).length;
+var created_count = 0;
+var skipped_count = 0;
+var events_created = 0;
+
+
+// convert the data back to json for parsing
+var cnvt = new global.GoogleMapsUtils();
+var jsonData = cnvt.convert(current.returned_raw_data);
+
+//Loop through the data and create or update the sites
+//and events.  Different from Refresh City Sites .. the list
+//we are looping through are events.  We need to check the venue_id
+//against the guide_sites table and create or update, then we can add
+//the event.
+
+for(var i=0;i<place_count;i++) {
+	var lkup = new GlideRecord('x_snc_guide_site');
+	lkup.addQuery('g_place_id', jsonData.events[i].venue_id);
+	lkup.setLimit(1);
+	lkup.query();
+	lkup.next();
+	if (lkup.sys_id) {
+		//   site found - skip record - save the api call (for now)
+		
+		lkup.update();
+		skipped_count++;
+		// Do NOT create Events for UPDATE
+		//if (current.create_events) {
+			//	createEvents(lkup);
+			//}
+		} else {
+			//   No site .. creat one
+			//   First we need the venue details from Eventbrite
+			var msi = new MapScriptInclude();
+			var venue_data = msi.getEventVenue(jsonData.events[i].venue_id);
+			var media_data = msi.getEventMedia(jsonData.events[i].logo.id);
+			// convert the data back to json for parsing
+			var cnvt = new global.GoogleMapsUtils();
+			var venue_data_json = cnvt.convert(venue_data);
+			var media_data_json = cnvt.convert(media_data);
+			//
+			var gr = new GlideRecord('x_snc_guide_site');
+			gr.initialize();
+			gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Eventbrite Query number: ' + current.number;
+			gr.type = current.type;
+			gr.location = venue_data_json.address.localized_address_display;
+			gr.g_vicinity = venue_data_json.address.localized_address_display;
+			gr.name = venue_data_json.name;
+			// google added fields - match Eventbrite fields
+			gr.g_name = venue_data_json.name;
+			gr.g_place_id = venue_data_json.id;
+			gr.g_location = venue_data_json.latitude + ',' + venue_data_json.longitude;
+			gr.g_site_google_url = jsonData.events[i].url;
+			gr.eventbrite_created = 'true';
+			
+			gr.insert();
+			created_count++;
+			// Now create the event for this site
+			createEvents(gr, i, media_data_json.url);
+			
+		}
+		
+	}
+	
+	//Update the GoogleMap Place query record ..
+	current.sites_created = created_count;
+	current.sites_updated = skipped_count;
+    current.events_created = events_created;
+	current.update();
+	
+	function createEvents(site, j, photo_url_raw) {
+		var ev = new GlideRecord('x_snc_guide_event');
+		ev.initialize();
+		ev.name = jsonData.events[j].name.text;
+		ev.site = site.sys_id;
+		ev.active = true;
+		ev.state = 'Active';
+		if (jsonData.events[j].is_free) {
+			ev.cost = '0';
+		} else {
+			ev.cost = '1';
+		}
+		ev.description = jsonData.events[j].description.text;
+		ev.end_date = jsonData.events[j].end.local;
+		ev.start_date = jsonData.events[j].start.local;
+		ev.url = jsonData.events[j].url;
+		ev.eb_event_id = jsonData.events[j].id;
+		ev.eb_category_id = jsonData.events[j].category_id;
+		ev.eb_subcategory_id = jsonData.events[j].subcategory_id;
+		
+		loadType(ev.eb_category_id.toString(), ev);
+		
+		//we passed in a photo from our media api call ..
+		//The image comes in with a "https://img.evbuc.com/" prefix so we need to strip it out
+		//on an error .. the grand-opening picture will be on the event  (this shouldn't happen)
+		var p_len = photo_url_raw.length;
+		var photo_url = photo_url_raw.slice(22, p_len);
+		try {
+			if(photo_url) {
+				ev.photo_url = photo_url;
+			} else {
+				ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+			}
+		}
+		catch(err){
+			ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+		}
+		
+		//insert the Event
+		ev.insert();
+		events_created++;
+		
+	}
+	
+	function loadType(eb_category, evRec) {
+		
+		switch (eb_category) {
+			case "103":
+			evRec.type = 'Music';
+			evRec.type_list = '3e506969dbfab20087c1fd441d9619ac';   //type = 'live music'
+			break;
+			case "105":
+			evRec.type = 'Drama';
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d';   //type = 'Drama'
+			break;
+			case "110":
+			evRec.type =  'Food';
+			evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = '  Food'
+			break;
+			case "108":
+			evRec.type = 'Sports';
+			evRec.type_list = '50de1929dbfab20087c1fd441d96198f';   //type = 'sports & recreation'
+			break;
+			case "109":
+			evRec.type = 'Nature';
+			evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'Nature'
+			break;
+			default:
+			evRec.type_list = 'eb106969dbfab20087c1fd441d96196d,53b1e1a9dbfab20087c1fd441d961947,50de1929dbfab20087c1fd441d96198f'; // type = 'Exhibition,Food & Drink
+			break;
+			
+		}
+		
+	}
+	
+	
+	]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-01 18:07:48</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>a6fdfd16db07fa0087c1fd441d96190e</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>Refresh EventBrite Sites and Events</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_ui_action_a6fdfd16db07fa0087c1fd441d96190e</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-06-02 09:25:25</sys_updated_on>
+        <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

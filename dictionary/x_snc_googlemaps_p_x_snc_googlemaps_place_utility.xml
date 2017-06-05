@@ -3,6 +3,7 @@
     <element label="GoogleMaps Place Utility" max_length="40" name="x_snc_googlemaps_p_x_snc_googlemaps_place_utility" type="collection">
         <element label="Create Events" max_length="40" name="create_events" type="boolean"/>
         <element label="Discovery comments" max_length="1000" name="discovery_comments" type="string"/>
+        <element label="Eventbrite discovered events count" max_length="40" name="discovery_events_count" read_only="true" type="string"/>
         <element label="Discovery places count" max_length="40" name="discovery_places_count" read_only="true" type="integer"/>
         <element label="Events created" max_length="40" name="events_created" read_only="true" type="string"/>
         <element label="Event Count" max_length="40" name="event_count" read_only="true" type="integer"/>

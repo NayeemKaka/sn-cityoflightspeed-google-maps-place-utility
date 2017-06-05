@@ -13,13 +13,13 @@
         <change_fields>false</change_fields>
         <client_callable>false</client_callable>
         <collection>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</collection>
-        <condition>current.googlemaps_request_type=="getRadarsearch" || current.googlemaps_request_type=="getPlaceNearbysearch" || current.googlemaps_request_type=="getDetails"</condition>
+        <condition>current.googlemaps_request_type=="getEvents"</condition>
         <description/>
         <execute_function>false</execute_function>
         <filter_condition/>
         <is_rest>false</is_rest>
         <message/>
-        <name>Submit GoogleMapsSearch</name>
+        <name>Submit Eventbrite Search</name>
         <order>100</order>
         <priority>100</priority>
         <rest_method/>
@@ -29,35 +29,30 @@
         <rest_variables/>
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
-
-	// Add your code here
-	var apiKey = getApiKey();
-	var srchType = current.googlemaps_request_type;
+	
+	// Get the Eventbrite token and split the location field
+	var apiToken = getApiToken();
+	
+	var LatLng = [];
+	LatLng = current.location.split(",");
+	var lat = LatLng[0];
+	var lng = LatLng[1];
 	
 	try {
-		var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.GoogleMaps', srchType);
-		if (srchType == 'getDetails') {
-			r.setStringParameterNoEscape('placeid', current.place_id);
-			r.setStringParameterNoEscape('key', apiKey);
-		} else {
-			r.setStringParameterNoEscape('radius', current.radius);
-			r.setStringParameterNoEscape('key', apiKey);
-			r.setStringParameterNoEscape('location', current.location);
-			r.setStringParameterNoEscape('type', current.type.getDisplayValue().toLowerCase());
-		}
-		
-		
-		//override authentication profile
-		//authentication type ='basic'/ 'oauth2'
-		//r.setAuthentication(authentication type, profile name);
+		var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getEvents');
+		r.setStringParameterNoEscape('categories', current.event_type);
+		r.setStringParameterNoEscape('latitude', lat);
+		r.setStringParameterNoEscape('longitude', lng);
+		r.setStringParameterNoEscape('token', apiToken);
 		
 		var response = r.execute();
 		var responseBody = response.getBody();
 		var httpStatus = response.getStatusCode();
 		
 		current.returned_raw_data = responseBody;
-		current.discovery_places_count = (responseBody.match(/place_id/g) || []).length;
-	//	current.place_id_array = loadPlace_ids(responseBody, current.cache_discovery_places_count);
+		//each event comes with a venue_id (site)
+		current.discovery_events_count = (responseBody.match(/venue_id/g) || []).length;
+		current.discovery_places_count = current.discovery_events_count;
 		
 		current.result = 'Success';
 	}
@@ -71,45 +66,35 @@
 	
 })(current, previous);
 
-function getApiKey() {
-	var Key = gs.getProperty("x_snc_googlemaps_p.googlekey") + '';
+function getApiToken() {
+	var Key = gs.getProperty("x_snc_googlemaps_p.eventbriteToken") + '';
 	if (Key == "") {
-		gs.addErrorMessage("There was no API key, please check the Googlekey property");
+		gs.addErrorMessage("There was no API token, please check the Eventbrite token property");
 		return;
 	}
 	return Key;
 }
 
-function loadPlace_ids(responseData, max_count) {
-	var parser = new JSONParser();
-    var parsedD = parser.parse(responseData);
-	var arr = [];
-	for(var i=0;i<max_count;i++) {
-		arr.push(parsedD.results[i].place_id);
-	}
-	return arr;
-}
-
 ]]></script>
         <sys_class_name>sys_script</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2017-05-16 19:11:15</sys_created_on>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-01 17:04:37</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>55723fc14f3aba002d1d958f0310c742</sys_id>
-        <sys_mod_count>15</sys_mod_count>
-        <sys_name>Submit GoogleMapsSearch</sys_name>
+        <sys_id>a36e659edbc3fa0087c1fd441d961959</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Submit Eventbrite Search</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
-        <sys_update_name>sys_script_55723fc14f3aba002d1d958f0310c742</sys_update_name>
+        <sys_update_name>sys_script_a36e659edbc3fa0087c1fd441d961959</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-01 16:57:04</sys_updated_on>
+        <sys_updated_on>2017-06-01 18:06:42</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>
-    <sys_translated_text action="delete_multiple" query="documentkey=55723fc14f3aba002d1d958f0310c742"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=a36e659edbc3fa0087c1fd441d961959"/>
 </record_update>
