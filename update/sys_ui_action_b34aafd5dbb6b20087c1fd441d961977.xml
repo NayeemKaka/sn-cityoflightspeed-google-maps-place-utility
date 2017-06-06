@@ -143,11 +143,11 @@ for(var i=0;i<place_count;i++) {
 			if(site.g_photo_from_google) {
 				ev.photo_url = site.g_photo_url;
 			} else {
-				ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+				ev.photo_url = 'events-placeholder.png';
 			}
 		}
 		catch(err){
-			ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+			ev.photo_url = 'events-placeholder.png';
 		}
 		
 		//insert the Event
@@ -281,7 +281,7 @@ for(var i=0;i<place_count;i++) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b34aafd5dbb6b20087c1fd441d961977</sys_id>
-        <sys_mod_count>109</sys_mod_count>
+        <sys_mod_count>110</sys_mod_count>
         <sys_name>Refresh City Sites</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -290,7 +290,7 @@ for(var i=0;i<place_count;i++) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_b34aafd5dbb6b20087c1fd441d961977</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-25 20:44:07</sys_updated_on>
+        <sys_updated_on>2017-06-06 11:21:29</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

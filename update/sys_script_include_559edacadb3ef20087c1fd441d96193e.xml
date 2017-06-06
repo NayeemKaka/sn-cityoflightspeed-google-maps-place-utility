@@ -13,6 +13,158 @@ MapScriptInclude.prototype = {
 	},
 	
 	getNearbyEvents : function (r_lat, r_lng, r_type, r_radius) {
+		// find events at google genrated sites
+		var googleEvents = getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius);
+		// find Eventbrite events in this lat, lng
+		var ebriteEvents = getEbriteEvents(r_lat, r_lng);
+		
+		// the events use the same object layout .. so contatenate and return
+		var allEvents = googleEvents.concat(ebriteEvents);
+		var jsonData = JSON.stringify(allEvents);
+		return jsonData;
+		
+	},
+	
+	getSiteDetails : function (r_place_id) {
+		
+		var apiKey = getApiKey();
+		try {
+			var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.GoogleMaps', 'getDetails');
+			r.setStringParameterNoEscape('placeid', r_place_id);
+			r.setStringParameterNoEscape('key', apiKey);
+			
+			var response = r.execute();
+			var responseBody = response.getBody();
+			var httpStatus = response.getStatusCode();
+			
+			return responseBody;
+			
+		}
+		catch(ex) {
+			var message = ex.getMessage();
+		}
+	},
+	
+	getEventVenue : function (r_venue_id) {
+		
+		var apiToken = getApiToken();
+		try {
+			var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getVenue');
+			var currEndPoint = r.getEndpoint();
+			// "15581574" is the default venue_id endpoint
+			var newEndPoint = currEndPoint.replace("15581574",r_venue_id);
+			r.setEndpoint(newEndPoint);
+			r.setStringParameterNoEscape('token', apiToken);
+			
+			var response = r.execute();
+			var responseBody = response.getBody();
+			var httpStatus = response.getStatusCode();
+			
+			return responseBody;
+			
+		}
+		catch(ex) {
+			var message = ex.getMessage();
+		}
+	},
+	
+	getEventMedia : function (r_event_id) {
+		
+		var apiToken = getApiToken();
+		try {
+			var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getMedia');
+			var currEndPoint = r.getEndpoint();
+			// "15581574" is the default venue_id endpoint
+			var newEndPoint = currEndPoint.replace("31747085",r_event_id);
+			r.setEndpoint(newEndPoint);
+			r.setStringParameterNoEscape('token', apiToken);
+			
+			var response = r.execute();
+			var responseBody = response.getBody();
+			var httpStatus = response.getStatusCode();
+			
+			return responseBody;
+		}
+		catch(ex) {
+			var message = ex.getMessage();
+		}
+	},
+	
+	
+	type: 'MapScriptInclude'
+};
+
+//  get all Ebrite Events in the area
+function getEbriteEvents(r_lat, r_lng) {
+	
+	var apiToken = getApiToken();
+	var ebCategory = "103,104,105,108,109,110";
+	
+	try {
+		var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getEvents');
+		r.setStringParameterNoEscape('categories', ebCategory);
+		r.setStringParameterNoEscape('latitude', r_lat);
+		r.setStringParameterNoEscape('longitude', r_lng);
+		r.setStringParameterNoEscape('token', apiToken);
+		
+		var response = r.execute();
+		var responseBody = response.getBody();
+		var httpStatus = response.getStatusCode();
+		
+		var cnvt = new global.GoogleMapsUtils();
+		var parsedEB = cnvt.convert(responseBody);
+		// count the retrieved events
+		var ret_ev_count = (responseBody.match(/venue_id/g) || []).length;
+		var ebrite_events = loadEbriteEvents(parsedEB, ret_ev_count);
+		
+		return ebrite_events;
+		
+	}
+	catch(ex) {
+		var message = ex.getMessage();
+		current.returned_raw_data = message;
+		current.result = 'Failed';
+	}
+	
+}
+
+function loadEbriteEvents(ebData, eCount) {
+	var total_eb_events = 0;
+	var eb_events = [];
+	for(var ec=0;ec<eCount;ec++) {
+		//  -  find events
+		var ev = new GlideRecord('x_snc_guide_event');
+		ev.addQuery('eb_event_id', ebData.events[ec].id);
+		//ev.addQuery('state', 'Published');
+		//ev.addQuery('active', 'true');
+		ev.query();
+		var count = 0;
+		while (ev.next()) {
+			count++;
+			total_eb_events++;
+			message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start: </b>2017-09-26 07:00:00</p><p><b>End: </b>2017-09-27 00:00:00</p></div></div>';
+			var types = [];
+			var eventTypeGr = new GlideRecord('x_snc_guide_m2m_event_types');
+			eventTypeGr.addActiveQuery();
+			eventTypeGr.addQuery('x_event', ev.sys_id.toString());
+			eventTypeGr.query();
+			while (eventTypeGr.next()) {
+				types.push(eventTypeGr.event_type.name.toString());
+			}
+			var LatLng = [];
+			LatLng = ev.site.g_location.split(",");
+			var lat = LatLng[0];
+			var lng = LatLng[1];
+			var eventObj = {name: ev.name.toString(),types:types, message:message, lat: lat, lng: lng, sys_id: ev.sys_id.toString(), start_date: ev.start_date.toString(), end_date: ev.end_date.toString()};
+				eb_events.push(eventObj);
+			}
+			
+		}
+		gs.info('total eb events found: ' + total_eb_events);
+		return eb_events;
+	}
+	
+	function getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius) {
 		
 		var apiKey = getApiKey();
 		var r_location = r_lat + ',' + r_lng;
@@ -32,12 +184,10 @@ MapScriptInclude.prototype = {
 			place_count = (responseBody.match(/place_id/g) || []).length;
 			//
 			//  get a list of place_id's from the responseBody
-			//
 			var all_placeID_array = loadPlaceIdArray(responseBody, place_count);
 			//
 			//  check the placeId's against the guide site table
 			//  return the sys_id for the place_id's we find
-			//
 			var guide_sys_id;
 			var our_sites = [];
 			for(var s=0;s<place_count;s++) {
@@ -50,17 +200,10 @@ MapScriptInclude.prototype = {
 						our_sites.push(guideObj);
 					}
 				}
-				//
 				//  check each site for active events
-				//  return:
-				//          event_name
-				//          lat
-				//          lng
-				//          event_sys_id
-				//
-				var events_to_return = loadNearbyEvents(our_sites);
-				var jsonData = JSON.stringify(events_to_return);
-				return jsonData;
+				//  return: event_name, lat, lng, event_sys_id
+				var google_events = loadNearbyEvents(our_sites);
+				return google_events;
 				
 			}
 			catch(ex) {
@@ -68,181 +211,112 @@ MapScriptInclude.prototype = {
 				gs.info('MapScriptInclude error -> ' + message);
 				
 			}
-		},
-		
-		getSiteDetails : function (r_place_id) {
-			
-			var apiKey = getApiKey();
-			try {
-				var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.GoogleMaps', 'getDetails');
-				r.setStringParameterNoEscape('placeid', r_place_id);
-				r.setStringParameterNoEscape('key', apiKey);
-				
-				var response = r.execute();
-				var responseBody = response.getBody();
-				var httpStatus = response.getStatusCode();
-				
-				return responseBody;
-				
-			}
-			catch(ex) {
-				var message = ex.getMessage();
-			}
-		},
-		
-		getEventVenue : function (r_venue_id) {
-			
-			var apiToken = getApiToken();
-			try {
-				var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getVenue');
-				var currEndPoint = r.getEndpoint();
-				// "15581574" is the default venue_id endpoint
-				var newEndPoint = currEndPoint.replace("15581574",r_venue_id);
-				r.setEndpoint(newEndPoint);
-				r.setStringParameterNoEscape('token', apiToken);
-				
-				var response = r.execute();
-				var responseBody = response.getBody();
-				var httpStatus = response.getStatusCode();
-				
-				return responseBody;
-				
-			}
-			catch(ex) {
-				var message = ex.getMessage();
-			}
-		},
-		
-		getEventMedia : function (r_event_id) {
-			
-			var apiToken = getApiToken();
-			try {
-				var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getMedia');
-				var currEndPoint = r.getEndpoint();
-				// "15581574" is the default venue_id endpoint
-				var newEndPoint = currEndPoint.replace("31747085",r_event_id);
-				r.setEndpoint(newEndPoint);
-				r.setStringParameterNoEscape('token', apiToken);
-				
-				//override authentication profile
-				//authentication type ='basic'/ 'oauth2'
-				//r.setAuthentication(authentication type, profile name);
-				
-				var response = r.execute();
-				var responseBody = response.getBody();
-				var httpStatus = response.getStatusCode();
-				
-				return responseBody;
-			}
-			catch(ex) {
-				var message = ex.getMessage();
-			}
-		},
-		
-		
-		type: 'MapScriptInclude'
-	};
-	
-	function getApiKey() {
-		var Key = gs.getProperty("x_snc_googlemaps_p.googlekey") + '';
-		if (Key == "") {
-			gs.addErrorMessage("There was no API key, please check the Googlekey property");
-			return;
 		}
-		return Key;
-	}
-	
-	function getApiToken() {
-		var Key = gs.getProperty("x_snc_googlemaps_p.eventbriteToken") + '';
-		if (Key == "") {
-			gs.addErrorMessage("There was no API token, please check the Eventbrite token property");
-			return;
-		}
-		return Key;
-	}
-	
-	function loadPlaceIdArray(body, p_count) {
-		// convert the data back to json for parsing
-		// Json convert can't be called from scope so ..
-		// going through global.GoogleMapsUtils()
-		var cnvt = new global.GoogleMapsUtils();
-		var parsedD = cnvt.convert(body);
-		var arr = [];
-		for(var i=0;i<p_count;i++) {
-			arr.push(parsedD.results[i].place_id);
-		}
-		return arr;
-	}
-	
-	function checkGuideSites(p_id) {
-		var ret_sys_id = 'false';
-		var gs = new GlideRecord('x_snc_guide_site');
-		gs.addQuery('g_place_id', p_id);
-		//TEMP until Site and Event testing is over <------------------------ *
-		// gs.addQuery('state', 'Published');
-		// gs.addQuery('active', 'true');
-		gs.query();
-		if (gs.next()) {
-			ret_sys_id = gs.sys_id;
-		}
-		return ret_sys_id;
 		
-	}
-	
-	function loadNearbyEvents(sites_to_check) {
-		var site_count = sites_to_check.length;
-		var total_events = 0;
-		var our_events = [];
-		for(var sc=0;sc<site_count;sc++) {
-			var lkupPlaceId = sites_to_check[sc].placeID;
-			var gr = new GlideRecord('x_snc_guide_site');
-			gr.addQuery('g_place_id',sites_to_check[sc].placeID );
+		//  get a list of place_id's from the responseBody
+		function loadPlaceIdArray(body, p_count) {
+			// convert the data back to json for parsing
+			// Json convert can't be called from scope so ..
+			// going through global.GoogleMapsUtils()
+			var cnvt = new global.GoogleMapsUtils();
+			var parsedD = cnvt.convert(body);
+			var arr = [];
+			for(var i=0;i<p_count;i++) {
+				arr.push(parsedD.results[i].place_id);
+			}
+			return arr;
+		}
+		
+		// return the sys_id's of matching sites
+		function checkGuideSites(p_id) {
+			var ret_sys_id = 'false';
+			var gs = new GlideRecord('x_snc_guide_site');
+			gs.addQuery('g_place_id', p_id);
 			//TEMP until Site and Event testing is over <------------------------ *
-			//gr.addQuery('state', 'Published');
-			//gr.addQuery('active', 'true');
-			gr.query();
-			gr.next();
-			//   -  split Location
-			var LatLng = [];
-			LatLng = gr.g_location.split(",");
-			var lat = parseFloat(LatLng[0]);
-			var lng = parseFloat(LatLng[1]);
-			//  -  find events
-			var ev = new GlideRecord('x_snc_guide_event');
-			ev.addQuery('site', gr.sys_id);
-			//ev.addQuery('state', 'Published');
-			//ev.addQuery('active', 'true');
-			ev.query();
-			var count = 0;
-			while (ev.next()) {
-				count++;
-				total_events++;
-				//message = "<b><a href=/guide?id=city_guide_event_details&sys_id="+ev.sys_id.toString()+">"+ev.name.toString() +"</a></b><p><b>Start Date: </b>"+ev.start_date.toString()+"</p><p><b>End Date: </b>"+ev.end_date.toString()+"</p>";
-				message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start: </b>2017-09-26 07:00:00</p><p><b>End: </b>2017-09-27 00:00:00</p></div></div>';
-				var types = [];
-				var eventTypeGr = new GlideRecord('x_snc_guide_m2m_event_types');
-				eventTypeGr.addActiveQuery();
-				eventTypeGr.addQuery('x_event', ev.sys_id.toString());
-				eventTypeGr.query();
-				while (eventTypeGr.next()) {
-					types.push(eventTypeGr.event_type.name.toString());
-				}
-				var eventObj = {name: ev.name.toString(),types:types,message:message, lat: lat, lng: lng, sys_id: ev.sys_id.toString(), start_date: ev.start_date.toString(), end_date: ev.end_date.toString()};
-					our_events.push(eventObj);
-				}
-				
+			// gs.addQuery('state', 'Published');
+			// gs.addQuery('active', 'true');
+			gs.query();
+			if (gs.next()) {
+				ret_sys_id = gs.sys_id;
 			}
-			gs.info('total events found: ' + total_events);
-			return our_events;
+			return ret_sys_id;
+			
 		}
 		
-		]]></script>
+		// return active events
+		function loadNearbyEvents(sites_to_check) {
+			var site_count = sites_to_check.length;
+			var total_events = 0;
+			var our_events = [];
+			for(var sc=0;sc<site_count;sc++) {
+				var lkupPlaceId = sites_to_check[sc].placeID;
+				var gr = new GlideRecord('x_snc_guide_site');
+				gr.addQuery('g_place_id',sites_to_check[sc].placeID );
+				//TEMP until Site and Event testing is over <------------------------ *
+				//gr.addQuery('state', 'Published');
+				//gr.addQuery('active', 'true');
+				gr.query();
+				gr.next();
+				//   -  split Location
+				var LatLng = [];
+				LatLng = gr.g_location.split(",");
+				var lat = parseFloat(LatLng[0]);
+				var lng = parseFloat(LatLng[1]);
+				//  -  find events
+				var ev = new GlideRecord('x_snc_guide_event');
+				ev.addQuery('site', gr.sys_id);
+				//ev.addQuery('state', 'Published');
+				//ev.addQuery('active', 'true');
+				ev.query();
+				var count = 0;
+				while (ev.next()) {
+					count++;
+					total_events++;
+					//message = "<b><a href=/guide?id=city_guide_event_details&sys_id="+ev.sys_id.toString()+">"+ev.name.toString() +"</a></b><p><b>Start Date: </b>"+ev.start_date.toString()+"</p><p><b>End Date: </b>"+ev.end_date.toString()+"</p>";
+					message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start: </b>2017-09-26 07:00:00</p><p><b>End: </b>2017-09-27 00:00:00</p></div></div>';
+					var types = [];
+					var eventTypeGr = new GlideRecord('x_snc_guide_m2m_event_types');
+					eventTypeGr.addActiveQuery();
+					eventTypeGr.addQuery('x_event', ev.sys_id.toString());
+					eventTypeGr.query();
+					while (eventTypeGr.next()) {
+						types.push(eventTypeGr.event_type.name.toString());
+					}
+					var eventObj = {name: ev.name.toString(),types:types,message:message, lat: lat, lng: lng, sys_id: ev.sys_id.toString(), start_date: ev.start_date.toString(), end_date: ev.end_date.toString()};
+						our_events.push(eventObj);
+					}
+					
+				}
+				gs.info('total events found: ' + total_events);
+				return our_events;
+			}
+			
+			// GoogleMaps Places API key
+			function getApiKey() {
+				var Key = gs.getProperty("x_snc_googlemaps_p.googlekey") + '';
+				if (Key == "") {
+					gs.addErrorMessage("There was no API key, please check the Googlekey property");
+					return;
+				}
+				return Key;
+			}
+			
+			// Eventbrite API Token
+			function getApiToken() {
+				var Key = gs.getProperty("x_snc_googlemaps_p.eventbriteToken") + '';
+				if (Key == "") {
+					gs.addErrorMessage("There was no API token, please check the Eventbrite token property");
+					return;
+				}
+				return Key;
+			}
+			]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-05-19 15:59:55</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>559edacadb3ef20087c1fd441d96193e</sys_id>
-        <sys_mod_count>55</sys_mod_count>
+        <sys_mod_count>68</sys_mod_count>
         <sys_name>MapScriptInclude</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy>read</sys_policy>
@@ -250,6 +324,6 @@ MapScriptInclude.prototype = {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_script_include_559edacadb3ef20087c1fd441d96193e</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-01 21:56:04</sys_updated_on>
+        <sys_updated_on>2017-06-06 20:49:56</sys_updated_on>
     </sys_script_include>
 </record_update>
