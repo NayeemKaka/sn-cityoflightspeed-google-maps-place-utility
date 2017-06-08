@@ -29,31 +29,32 @@
         <rest_variables/>
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
-	
+
 	// Get the Eventbrite token and split the location field
 	var apiToken = getApiToken();
-	
+
 	var LatLng = [];
 	LatLng = current.location.split(",");
 	var lat = LatLng[0];
 	var lng = LatLng[1];
-	
+
 	try {
 		var r = new sn_ws.RESTMessageV2('x_snc_googlemaps_p.Eventbrite', 'getEvents');
 		r.setStringParameterNoEscape('categories', current.event_type);
 		r.setStringParameterNoEscape('latitude', lat);
 		r.setStringParameterNoEscape('longitude', lng);
 		r.setStringParameterNoEscape('token', apiToken);
-		
+		r.setStringParameterNoEscape('start_keyword', current.start_date_keyword);
+
 		var response = r.execute();
 		var responseBody = response.getBody();
 		var httpStatus = response.getStatusCode();
-		
+
 		current.returned_raw_data = responseBody;
 		//each event comes with a venue_id (site)
 		current.discovery_events_count = (responseBody.match(/venue_id/g) || []).length;
 		current.discovery_places_count = current.discovery_events_count;
-		
+
 		current.result = 'Success';
 	}
 	catch(ex) {
@@ -61,9 +62,9 @@
 		current.returned_raw_data = message;
 		current.result = 'Failed';
 	}
-	
+
 	current.update();
-	
+
 })(current, previous);
 
 function getApiToken() {
@@ -83,7 +84,7 @@ function getApiToken() {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a36e659edbc3fa0087c1fd441d961959</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>Submit Eventbrite Search</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -92,7 +93,7 @@ function getApiToken() {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_script_a36e659edbc3fa0087c1fd441d961959</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-01 18:06:42</sys_updated_on>
+        <sys_updated_on>2017-06-07 17:43:28</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

@@ -5,7 +5,6 @@
         <element label="Discovery comments" max_length="1000" name="discovery_comments" type="string"/>
         <element label="Eventbrite discovered events count" max_length="40" name="discovery_events_count" read_only="true" type="string"/>
         <element label="Discovery places count" max_length="40" name="discovery_places_count" read_only="true" type="integer"/>
-        <element label="Events created" max_length="40" name="events_created" read_only="true" type="string"/>
         <element label="Event Count" max_length="40" name="event_count" read_only="true" type="integer"/>
         <element choice="1" label="Event Type" max_length="40" name="event_type" type="choice">
             <choice>
@@ -46,7 +45,19 @@
         <element label="Returned events json" max_length="5000" name="returned_events_json" type="string"/>
         <element label="Returned raw data" max_length="100000" name="returned_raw_data" type="string"/>
         <element label="Sites Created" max_length="40" name="sites_created" read_only="true" type="integer"/>
+        <element label="Sites skipped" max_length="40" name="sites_skipped" read_only="true" type="integer"/>
         <element label="Sites_updated" max_length="40" name="sites_updated" read_only="true" type="integer"/>
+        <element choice="1" label="Start date keyword" max_length="40" name="start_date_keyword" type="choice">
+            <choice>
+                <element label="today" sequence="10" value="today"/>
+                <element label="tomorrow" sequence="20" value="tomorrow"/>
+                <element label="this week" sequence="30" value="this_week"/>
+                <element label="this weekend" sequence="40" value="this_weekend"/>
+                <element label="this month" sequence="50" value="this_month"/>
+                <element label="next week" sequence="60" value="next_week"/>
+                <element label="next month" sequence="70" value="next_month"/>
+            </choice>
+        </element>
         <element label="Type" max_length="32" name="type" reference="x_snc_guide_site_type" type="reference"/>
         <element label="Use location from googlemaps URL" max_length="40" name="use_location_from_googlemaps_url" type="boolean"/>
         <index name="index">

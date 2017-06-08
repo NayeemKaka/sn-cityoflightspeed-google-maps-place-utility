@@ -62,12 +62,20 @@ for(var i=0;i<place_count;i++) {
 			//   First we need the venue details from Eventbrite
 			var msi = new MapScriptInclude();
 			var venue_data = msi.getEventVenue(jsonData.events[i].venue_id);
-			var media_data = msi.getEventMedia(jsonData.events[i].logo.id);
 			// convert the data back to json for parsing
 			var cnvt = new global.GoogleMapsUtils();
 			var venue_data_json = cnvt.convert(venue_data);
-			var media_data_json = cnvt.convert(media_data);
-			//
+			
+			//  logo id is not always provided - check for null
+			var media_photo;
+			if (jsonData.events[i].logo) {
+				var media_data = msi.getEventMedia(jsonData.events[i].logo.id);
+				var media_data_json = cnvt.convert(media_data);
+				media_photo = media_data_json.url;
+			} else {
+				media_photo = 'null logo';
+			}
+			
 			var gr = new GlideRecord('x_snc_guide_site');
 			gr.initialize();
 			gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Eventbrite Query number: ' + current.number;
@@ -85,7 +93,7 @@ for(var i=0;i<place_count;i++) {
 			gr.insert();
 			created_count++;
 			// Now create the event for this site
-			createEvents(gr, i, media_data_json.url);
+			createEvents(gr, i, media_photo);
 			
 		}
 		
@@ -93,8 +101,8 @@ for(var i=0;i<place_count;i++) {
 	
 	//Update the GoogleMap Place query record ..
 	current.sites_created = created_count;
-	current.sites_updated = skipped_count;
-    current.events_created = events_created;
+	current.sites_skipped = skipped_count;
+	current.event_count = events_created;
 	current.update();
 	
 	function createEvents(site, j, photo_url_raw) {
@@ -102,12 +110,15 @@ for(var i=0;i<place_count;i++) {
 		ev.initialize();
 		ev.name = jsonData.events[j].name.text;
 		ev.site = site.sys_id;
+		// events are created 'Active/Draft'
+		// workflow inspects and changes state accordingly
 		ev.active = true;
-		ev.state = 'Active';
+		ev.state = 'Draft';
 		if (jsonData.events[j].is_free) {
 			ev.cost = '0';
 		} else {
-			ev.cost = '1';
+		//  random generate cost between $1.00 and $50.00
+			ev.cost = getRandomInt(1,50);
 		}
 		ev.description = jsonData.events[j].description.text;
 		ev.end_date = jsonData.events[j].end.local;
@@ -128,11 +139,11 @@ for(var i=0;i<place_count;i++) {
 			if(photo_url) {
 				ev.photo_url = photo_url;
 			} else {
-				ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+				ev.photo_url = 'events-placeholder.png';
 			}
 		}
 		catch(err){
-			ev.photo_url = 'https://cityoflightspeeddev.service-now.com/events-placeholder.png';
+			ev.photo_url = 'events-placeholder.png';
 		}
 		
 		//insert the Event
@@ -172,7 +183,10 @@ for(var i=0;i<place_count;i++) {
 		
 	}
 	
-	
+	// Returns a random integer between min (included) and max (included)
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 	]]></script>
         <show_insert>true</show_insert>
         <show_multiple_update>false</show_multiple_update>
@@ -185,7 +199,7 @@ for(var i=0;i<place_count;i++) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a6fdfd16db07fa0087c1fd441d96190e</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>Refresh EventBrite Sites and Events</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -194,7 +208,7 @@ for(var i=0;i<place_count;i++) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_a6fdfd16db07fa0087c1fd441d96190e</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-02 09:25:25</sys_updated_on>
+        <sys_updated_on>2017-06-08 12:04:10</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

@@ -2,7 +2,8 @@
 <record_update sys_domain="global" table="sys_ui_policy">
     <sys_ui_policy action="INSERT_OR_UPDATE">
         <active>true</active>
-        <conditions table="x_snc_googlemaps_p_x_snc_googlemaps_place_utility">events_created&gt;=1^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        <conditions table="x_snc_googlemaps_p_x_snc_googlemaps_place_utility">event_countISNOTEMPTY^EQ<item endquery="false" field="event_count" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
         </conditions>
         <description/>
         <global>true</global>
@@ -20,24 +21,24 @@
 
 }]]></script_true>
         <set_values/>
-        <short_description>only show events created if the utility created these events</short_description>
+        <short_description>show event count if &gt; 0</short_description>
         <sys_class_name>sys_ui_policy</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
-        <sys_created_on>2017-05-21 20:58:05</sys_created_on>
+        <sys_created_on>2017-06-07 18:59:58</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>453bfdfedb32760087c1fd441d96190e</sys_id>
+        <sys_id>a453c5d0dbdfbe00c3beffa31d9619fb</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>only show events created if the utility created these events</sys_name>
+        <sys_name>show event count if &gt; 0</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
-        <sys_update_name>sys_ui_policy_453bfdfedb32760087c1fd441d96190e</sys_update_name>
+        <sys_update_name>sys_ui_policy_a453c5d0dbdfbe00c3beffa31d9619fb</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-05-21 20:58:05</sys_updated_on>
+        <sys_updated_on>2017-06-07 18:59:58</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui_type>0</ui_type>
         <view/>
