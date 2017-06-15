@@ -42,7 +42,7 @@
         <sys_class_name>sys_data_source</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-05-17 10:57:21</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>839b8b59db76b20087c1fd441d9619ed</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>x_snc_guide_site_type.xlsx (Uploaded)</sys_name>

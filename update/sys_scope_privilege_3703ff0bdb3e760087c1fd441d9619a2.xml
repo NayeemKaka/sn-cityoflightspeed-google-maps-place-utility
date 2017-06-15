@@ -7,7 +7,7 @@
         <sys_class_name>sys_scope_privilege</sys_class_name>
         <sys_created_by>sush.chandrashekar</sys_created_by>
         <sys_created_on>2017-05-23 00:19:04</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>3703ff0bdb3e760087c1fd441d9619a2</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_guide_m2m_event_types</sys_name>

@@ -12,7 +12,7 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>tom.cullen</sys_created_by>
             <sys_created_on>2017-05-17 22:11:34</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_id>d7e52d2ddbfab20087c1fd441d9619fc</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Sites_updated</sys_name>

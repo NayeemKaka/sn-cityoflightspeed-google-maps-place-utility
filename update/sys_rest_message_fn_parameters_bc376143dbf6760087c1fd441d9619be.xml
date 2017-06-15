@@ -6,7 +6,7 @@
         <sys_class_name>sys_rest_message_fn_parameters</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-05-22 14:08:11</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>bc376143dbf6760087c1fd441d9619be</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>radius</sys_name>

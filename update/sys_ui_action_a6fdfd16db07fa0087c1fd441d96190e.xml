@@ -21,9 +21,7 @@
         <name>Refresh EventBrite Sites and Events</name>
         <onclick/>
         <order>-500</order>
-        <script><![CDATA[// Json convert can't be called from scope so ..
-// going through global.GoogleMapsUtils()
-
+        <script><![CDATA[
 // get the place_id count
 var place_count = 0;
 var place_count = (current.returned_raw_data.match(/venue_id/g) || []).length;
@@ -31,10 +29,8 @@ var created_count = 0;
 var skipped_count = 0;
 var events_created = 0;
 
-
 // convert the data back to json for parsing
-var cnvt = new global.GoogleMapsUtils();
-var jsonData = cnvt.convert(current.returned_raw_data);
+var jsonData  = JSON.parse(current.returned_raw_data);
 
 //Loop through the data and create or update the sites
 //and events.  Different from Refresh City Sites .. the list
@@ -63,14 +59,13 @@ for(var i=0;i<place_count;i++) {
 			var msi = new MapScriptInclude();
 			var venue_data = msi.getEventVenue(jsonData.events[i].venue_id);
 			// convert the data back to json for parsing
-			var cnvt = new global.GoogleMapsUtils();
-			var venue_data_json = cnvt.convert(venue_data);
+			var venue_data_json = JSON.parse(venue_data);
 			
 			//  logo id is not always provided - check for null
 			var media_photo;
 			if (jsonData.events[i].logo) {
 				var media_data = msi.getEventMedia(jsonData.events[i].logo.id);
-				var media_data_json = cnvt.convert(media_data);
+				var media_data_json = JSON.parse(media_data);
 				media_photo = media_data_json.url;
 			} else {
 				media_photo = 'null logo';
@@ -117,7 +112,7 @@ for(var i=0;i<place_count;i++) {
 		if (jsonData.events[j].is_free) {
 			ev.cost = '0';
 		} else {
-		//  random generate cost between $1.00 and $50.00
+			//  random generate cost between $1.00 and $50.00
 			ev.cost = getRandomInt(1,50);
 		}
 		ev.description = jsonData.events[j].description.text;
@@ -199,7 +194,7 @@ for(var i=0;i<place_count;i++) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a6fdfd16db07fa0087c1fd441d96190e</sys_id>
-        <sys_mod_count>31</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name>Refresh EventBrite Sites and Events</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -208,7 +203,7 @@ for(var i=0;i<place_count;i++) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_a6fdfd16db07fa0087c1fd441d96190e</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-08 12:04:10</sys_updated_on>
+        <sys_updated_on>2017-06-15 11:13:50</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

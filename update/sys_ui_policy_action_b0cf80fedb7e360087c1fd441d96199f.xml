@@ -7,7 +7,7 @@
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-05-21 13:07:42</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>b0cf80fedb7e360087c1fd441d96199f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>sites_updated</sys_name>

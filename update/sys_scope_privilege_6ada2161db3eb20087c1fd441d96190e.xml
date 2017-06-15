@@ -7,7 +7,7 @@
         <sys_class_name>sys_scope_privilege</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-05-17 22:33:05</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>6ada2161db3eb20087c1fd441d96190e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_guide_site</sys_name>

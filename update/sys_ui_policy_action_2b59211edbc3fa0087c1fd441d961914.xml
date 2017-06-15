@@ -7,7 +7,7 @@
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-06-01 16:38:01</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>2b59211edbc3fa0087c1fd441d961914</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>event_type</sys_name>

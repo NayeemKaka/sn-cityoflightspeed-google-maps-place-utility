@@ -5,24 +5,24 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_snc_googlemaps_p_ii_googlemap_site_types</name>
+        <name>u_imp_tmpl_x_snc_googlemaps_p_ii_googlemap_site_types</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2017-05-16 16:33:46</sys_created_on>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-05-17 10:57:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>d2e9c7d5db76b20087c1fd441d96190f</sys_id>
+        <sys_id>5c45f31edb97b20087c1fd441d961933</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>x_snc_googlemaps_p_ii_googlemap_site_types</sys_name>
+        <sys_name>u_imp_tmpl_x_snc_googlemaps_p_ii_googlemap_site_types</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
-        <sys_update_name>ua_table_licensing_config_d2e9c7d5db76b20087c1fd441d96190f</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-05-16 16:33:46</sys_updated_on>
+        <sys_update_name>ua_table_licensing_config_5c45f31edb97b20087c1fd441d961933</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-05-17 10:57:22</sys_updated_on>
     </ua_table_licensing_config>
 </record_update>

@@ -6,7 +6,7 @@
         <sys_class_name>sys_rest_message_fn_parameters</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-06-01 12:33:07</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>f64174d2db83fa0087c1fd441d96190e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>token</sys_name>
