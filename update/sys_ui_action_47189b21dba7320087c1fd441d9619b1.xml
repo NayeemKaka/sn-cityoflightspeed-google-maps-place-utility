@@ -18,7 +18,7 @@
         <list_context_menu>false</list_context_menu>
         <list_link>false</list_link>
         <list_save_with_form_button>false</list_save_with_form_button>
-        <name>Return Nearby Events</name>
+        <name>Return Nearby Sites</name>
         <onclick/>
         <order>-600</order>
         <script><![CDATA[//Let's test this bad-boy
@@ -34,17 +34,17 @@ var temp_radius = current.radius;
 
 
 var mapScriptInclude = new MapScriptInclude();
-current.json_event_data = mapScriptInclude.getNearbyEvents(lat, lng, temp_type, current.radius);
+current.json_event_data = mapScriptInclude.getNearbySites(lat, lng, temp_type, current.radius);
 
-current.event_count = (current.json_event_data.match(/sys_id/g) || []).length;
-current.returned_type = 'events';
+current.event_count = (current.json_event_data.match(/message/g) || []).length;
+current.returned_type = 'sites';
 
 if (current.event_count ==0) {
-	current.json_event_data = '0 nearby events for this location, type, and radius.';
-	current.discovery_comments = current.discovery_comments + '\n ** generated json event data (0) **';
+	current.json_event_data = '0 nearby sites for this location, type, and radius.';
+	current.discovery_comments = current.discovery_comments + '\n ** generated json site data (0) **';
 } else {
 	current.json_events_generated = 'true';
-	current.discovery_comments = current.discovery_comments + '\n ** generated json event data (' + current.event_count + ') **';
+	current.discovery_comments = current.discovery_comments + '\n ** generated json site data (' + current.event_count + ') **';
 }
 
 
@@ -59,21 +59,21 @@ current.update();
         <show_update>true</show_update>
         <sys_class_name>sys_ui_action</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
-        <sys_created_on>2017-05-19 09:48:59</sys_created_on>
+        <sys_created_on>2017-06-24 13:17:32</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>012f090adbbaf20087c1fd441d9619d8</sys_id>
-        <sys_mod_count>27</sys_mod_count>
-        <sys_name>Return Nearby Events</sys_name>
+        <sys_id>47189b21dba7320087c1fd441d9619b1</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Return Nearby Sites</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
-        <sys_update_name>sys_ui_action_012f090adbbaf20087c1fd441d9619d8</sys_update_name>
+        <sys_update_name>sys_ui_action_47189b21dba7320087c1fd441d9619b1</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-24 14:39:23</sys_updated_on>
+        <sys_updated_on>2017-06-26 19:09:26</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

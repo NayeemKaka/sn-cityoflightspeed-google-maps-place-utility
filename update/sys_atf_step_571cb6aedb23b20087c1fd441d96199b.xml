@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Set the values on the form as follows:
+GoogleMaps request type = nearbysearch - nearbysearch returns establishment details (60 max)  - Generate S
+and GoogleMaps URL = https://www.google.com/maps/place/Brooklyn,+NY/@40.6454199,-74.0850829,11z/data=!3m1!4b1!4m5!3m4!1s0x89c24416947c2109:0x82765c7404007886!8m2!3d40.6781784!4d-73.9441579?hl=en
+and Discovery comments = nearbysearch for park(s) in Brooklyn
+and Location = 40.6454199,-74.0850829
+and Type = Park
+and Radius = 3 miles (3,218 meters)</description>
+        <display_name>Set Field Values</display_name>
+        <inputs/>
+        <order>3</order>
+        <step_config display_value="Set Field Values">fcae4a935332120028bc29cac2dc340e</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-27 13:52:10</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>571cb6aedb23b20087c1fd441d96199b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Set Field Values</sys_name>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_atf_step_571cb6aedb23b20087c1fd441d96199b</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-06-27 13:52:10</sys_updated_on>
+        <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
+        <test display_value="googleMaps Place Utility TEST 1">6f4bba6edb23b20087c1fd441d9619db</test>
+        <timeout/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=571cb6aedb23b20087c1fd441d96199b"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>571cb6aedb23b20087c1fd441d96199b</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-27 13:52:10</sys_created_on>
+        <sys_id>27ccfaaedb23b20087c1fd441d961997</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-06-27 13:52:10</sys_updated_on>
+        <value>googlemaps_request_type=getPlaceNearbysearch^googlemaps_url=https://www.google.com/maps/place/Brooklyn,+NY/@40.6454199,-74.0850829,11z/data=!3m1!4b1!4m5!3m4!1s0x89c24416947c2109:0x82765c7404007886!8m2!3d40.6781784!4d-73.9441579?hl=en^discovery_comments=nearbysearch for park(s) in Brooklyn^location=40.6454199,-74.0850829^type=1d2bf64ddbfe7200c3beffa31d9619f9^radius=3218^EQ</value>
+        <variable display_value="">b3dba2465320220002c6435723dc34f0</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>571cb6aedb23b20087c1fd441d96199b</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-27 13:52:10</sys_created_on>
+        <sys_id>ebccfaaedb23b20087c1fd441d961996</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-06-27 13:52:10</sys_updated_on>
+        <value>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</value>
+        <variable display_value="">424ca6465320220002c6435723dc34b5</variable>
+    </sys_variable_value>
+</record_update>

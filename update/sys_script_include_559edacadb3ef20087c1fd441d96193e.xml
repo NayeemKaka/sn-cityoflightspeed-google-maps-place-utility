@@ -14,7 +14,7 @@ MapScriptInclude.prototype = {
 	
 	getNearbyEvents : function (r_lat, r_lng, r_type, r_radius) {
 		// find events at google genrated sites
-		var googleEvents = getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius);
+		var googleEvents = getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius, 'events');
 		// find Eventbrite events in this lat, lng
 		var ebriteEvents = getEbriteEvents(r_lat, r_lng);
 		
@@ -22,6 +22,27 @@ MapScriptInclude.prototype = {
 		var allEvents = googleEvents.concat(ebriteEvents);
 		var jsonData = JSON.stringify(allEvents);
 		return jsonData;
+		
+	},
+	
+	getNearbySites : function (r_lat, r_lng, r_type, r_radius) {
+		// find google genrated sites
+		// For the City Banking App .. an r_type of "bank++" will concatenate a ATM and Bank types.
+		if (r_type === 'bank++') {
+			var googleSitesATM = getGoogleSiteEvents(r_lat, r_lng, 'atm', r_radius, 'sites');
+			var googleSitesBANK = getGoogleSiteEvents(r_lat, r_lng, 'bank', r_radius, 'sites');
+			var financeSites = googleSitesATM.concat(googleSitesBANK);
+			// Check and remove any duplicate objects
+			var uniqueArray = removeDuplicates(financeSites, "sys_id");
+			
+			var jsonDataF = JSON.stringify(uniqueArray);
+			return jsonDataF;
+			
+		} else {
+			var googleSites = getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius, 'sites');
+			var jsonData = JSON.stringify(googleSites);
+			return jsonData;
+		}
 		
 	},
 	
@@ -163,8 +184,8 @@ function loadEbriteEvents(ebData, eCount) {
 		return eb_events;
 	}
 	
-	function getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius) {
-		
+	function getGoogleSiteEvents(r_lat, r_lng, r_type, r_radius, r_return) {
+		//r_return is the payload type passed by the calling request as 'events' or 'sites'
 		var apiKey = getApiKey();
 		var r_location = r_lat + ',' + r_lng;
 		try {
@@ -199,11 +220,17 @@ function loadEbriteEvents(ebData, eCount) {
 						our_sites.push(guideObj);
 					}
 				}
-				//  check each site for active events
-				//  return: event_name, lat, lng, event_sys_id
-				var google_events = loadNearbyEvents(our_sites);
-				return google_events;
-				
+				//  if they requested events .. check each site for active events
+				//      return: event_name, lat, lng, event_sys_id
+				//  else
+				//      return:  Sites
+				if (r_return == 'events') {
+					var google_events = loadNearbyEvents(our_sites);
+					return google_events;
+				} else {
+					var google_sites = LoadNearbySites(our_sites, r_type);
+					return google_sites;
+				}
 			}
 			catch(ex) {
 				var message = ex.getMessage();
@@ -216,7 +243,7 @@ function loadEbriteEvents(ebData, eCount) {
 		function loadPlaceIdArray(body, p_count) {
 			// convert the data back to json for parsing
 			var parsedD  = JSON.parse(body);
-
+			
 			var arr = [];
 			for(var i=0;i<p_count;i++) {
 				arr.push(parsedD.results[i].place_id);
@@ -288,32 +315,80 @@ function loadEbriteEvents(ebData, eCount) {
 				return our_events;
 			}
 			
-			// GoogleMaps Places API key
-			function getApiKey() {
-				var Key = gs.getProperty("x_snc_googlemaps_p.googlekey") + '';
-				if (Key == "") {
-					gs.addErrorMessage("There was no API key, please check the Googlekey property");
-					return;
-				}
-				return Key;
-			}
-			
-			// Eventbrite API Token
-			function getApiToken() {
-				var Key = gs.getProperty("x_snc_googlemaps_p.eventbriteToken") + '';
-				if (Key == "") {
-					gs.addErrorMessage("There was no API token, please check the Eventbrite token property");
-					return;
-				}
-				return Key;
-			}
-			]]></script>
+			// returns nearby sites
+			function LoadNearbySites(sites_to_check, s_type) {
+				var site_count = sites_to_check.length;
+				var our_sites = [];
+				for(var sc=0;sc<site_count;sc++) {
+					var lkupPlaceId = sites_to_check[sc].placeID;
+					var gr = new GlideRecord('x_snc_guide_site');
+					gr.addQuery('g_place_id',sites_to_check[sc].placeID );
+					//TEMP until Site and Event testing is over <------------------------ *
+					//gr.addQuery('state', 'Published');
+					//gr.addQuery('active', 'true');
+					gr.query();
+					gr.next();
+					//   -  may want to check 'site type returned = 'r_type'
+					//	var siteType = gr.type.getDisplayValue();
+					//	if(siteType == s_type) {
+						//   -  split Location
+						var LatLng = [];
+						LatLng = gr.g_location.split(",");
+						var lat = parseFloat(LatLng[0]);
+						var lng = parseFloat(LatLng[1]);
+						//  -  store site
+						message = '<div class="flex-it"><div class="image" style="background-image:url('+ gr.g_photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+gr.sys_id.toString()+'>'+gr.name.toString() +'</a></b></div></div>';
+						var siteObj = {name: gr.name.toString(),message:message, lat: lat, lng: lng, sys_id: gr.sys_id.toString(), address: gr.g_vicinity.toString(), type: gr.type.getDisplayValue()};
+							our_sites.push(siteObj);
+							
+							//}
+							
+						}
+						return our_sites;
+					}
+					
+					// Remove any Duplicates from array
+					function removeDuplicates(arr, prop) {
+						var new_arr = [];
+						var lookup  = {};
+							
+							for (var i in arr) {
+								lookup[arr[i][prop]] = arr[i];
+							}
+							
+							for (i in lookup) {
+								new_arr.push(lookup[i]);
+							}
+							
+							return new_arr;
+						}
+						
+						// GoogleMaps Places API key
+						function getApiKey() {
+							var Key = gs.getProperty("x_snc_googlemaps_p.googlekey") + '';
+							if (Key === "") {
+								gs.addErrorMessage("There was no API key, please check the Googlekey property");
+								return;
+							}
+							return Key;
+						}
+						
+						// Eventbrite API Token
+						function getApiToken() {
+							var Key = gs.getProperty("x_snc_googlemaps_p.eventbriteToken") + '';
+							if (Key === "") {
+								gs.addErrorMessage("There was no API token, please check the Eventbrite token property");
+								return;
+							}
+							return Key;
+						}
+						]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-05-19 15:59:55</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>559edacadb3ef20087c1fd441d96193e</sys_id>
-        <sys_mod_count>70</sys_mod_count>
+        <sys_mod_count>83</sys_mod_count>
         <sys_name>MapScriptInclude</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy>read</sys_policy>
@@ -321,6 +396,6 @@ function loadEbriteEvents(ebData, eCount) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_script_include_559edacadb3ef20087c1fd441d96193e</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-15 11:07:08</sys_updated_on>
+        <sys_updated_on>2017-06-27 09:19:05</sys_updated_on>
     </sys_script_include>
 </record_update>

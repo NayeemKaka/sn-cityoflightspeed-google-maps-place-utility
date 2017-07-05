@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_atf_test">
+    <sys_atf_test action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Perform a nearbySearch, in Brooklyn NY  for Parks in a 3 mile radius</description>
+        <name>googleMaps Place Utility TEST 1</name>
+        <remember/>
+        <sys_class_name>sys_atf_test</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-06-27 13:47:48</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>6f4bba6edb23b20087c1fd441d9619db</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>googleMaps Place Utility TEST 1</sys_name>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_atf_test_6f4bba6edb23b20087c1fd441d9619db</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-06-27 13:47:48</sys_updated_on>
+    </sys_atf_test>
+    <sys_variable_value action="delete_multiple" query="document_key=6f4bba6edb23b20087c1fd441d9619db"/>
+</record_update>

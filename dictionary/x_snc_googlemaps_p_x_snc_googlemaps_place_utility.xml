@@ -44,6 +44,7 @@
         <element label="Result" max_length="40" name="result" read_only="true" type="string"/>
         <element label="Returned events json" max_length="5000" name="returned_events_json" type="string"/>
         <element label="Returned raw data" max_length="100000" name="returned_raw_data" type="string"/>
+        <element label="Returned type" max_length="40" name="returned_type" read_only="true" type="string"/>
         <element label="Sites Created" max_length="40" name="sites_created" read_only="true" type="integer"/>
         <element label="Sites skipped" max_length="40" name="sites_skipped" read_only="true" type="integer"/>
         <element label="Sites_updated" max_length="40" name="sites_updated" read_only="true" type="integer"/>
