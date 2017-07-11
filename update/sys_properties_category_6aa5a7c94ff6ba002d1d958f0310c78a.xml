@@ -5,18 +5,27 @@
         <sys_class_name>sys_properties_category</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-05-16 18:13:51</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
+        <sys_customer_update>true</sys_customer_update>
         <sys_id>6aa5a7c94ff6ba002d1d958f0310c78a</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>19</sys_mod_count>
         <sys_name>GoogleMaps Place Properties</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_properties_category_6aa5a7c94ff6ba002d1d958f0310c78a</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-05-16 18:13:51</sys_updated_on>
-        <title><![CDATA[<p><span style="color: #3366ff; font-size: 16px;">GoogleMap Place Utility Properties</span></p>]]></title>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-07-06 17:29:25</sys_updated_on>
+        <title><![CDATA[<pre><strong><span style="font-size: x-large;">GoogleMap Place Utility Properties</span></strong>
+</pre>
+<p><span style="color: #000000;">Set these properties to enable the GoogleMap Utility integrations. The links below provide integration documentation for each API used for site and event discovery.<br />NOTE: You will need to obtain your own google maps API key (free of charge!). The EventBrite API key does not need to be changed. It is registered to this application.</span> <span style="font-size: 10pt; color: #000000;"><br /> </span></p>
+<p><span style="font-size: 10pt; color: #000000;"><br /> </span> <span style="font-size: 10pt; color: #000000;">Google Documentation:</span></p>
+<pre style="padding-left: 30px;"><span style="font-size: 10pt; color: #0000ff;"><a title="" href="https://developers.google.com/places/web-service/get-api-key" target="_blank" rel="nofollow"><span style="color: #0000ff;">https://developers.google.com/places/web-service/get-api-key</span></a></span></pre>
+<p> </p>
+<p><span style="font-size: 10pt; color: #000000;">EventBrite Documentation:</span></p>
+<pre style="padding-left: 30px;"><span style="font-size: 10pt; color: #0000ff;"><a title="" href="https://www.eventbrite.com/developer/v3/" target="_blank" rel="nofollow"><span style="color: #0000ff;">https://www.eventbrite.com/developer/v3/</span></a></span>
+</pre>
+<p> </p>]]></title>
     </sys_properties_category>
     <sys_translated_text action="delete_multiple" query="documentkey=6aa5a7c94ff6ba002d1d958f0310c78a"/>
 </record_update>

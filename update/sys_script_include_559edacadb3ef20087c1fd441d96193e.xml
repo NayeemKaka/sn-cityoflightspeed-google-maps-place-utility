@@ -162,7 +162,8 @@ function loadEbriteEvents(ebData, eCount) {
 		while (ev.next()) {
 			count++;
 			total_eb_events++;
-			message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start: </b>2017-09-26 07:00:00</p><p><b>End: </b>2017-09-27 00:00:00</p></div></div>';
+			//message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start: </b>2017-09-26 07:00:00</p><p><b>End: </b>2017-09-27 00:00:00</p></div></div>';
+			message = '<div class="flex-it"><div class="image" style="background-image:url('+ ev.photo_url.toString()+')"></div><div class="info"><b><a href=/guide?id=city_guide_event_details&sys_id='+ev.sys_id.toString()+'>'+ev.name.toString() +'</a></b><p><b>Start Date: </b>'+ev.start_date.toString()+'</p><p><b>End Date: </b>'+ev.end_date.toString()+'</p></div></div>';
 			var types = [];
 			var eventTypeGr = new GlideRecord('x_snc_guide_m2m_event_types');
 			eventTypeGr.addActiveQuery();
@@ -388,14 +389,14 @@ function loadEbriteEvents(ebData, eCount) {
         <sys_created_on>2017-05-19 15:59:55</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>559edacadb3ef20087c1fd441d96193e</sys_id>
-        <sys_mod_count>83</sys_mod_count>
+        <sys_mod_count>84</sys_mod_count>
         <sys_name>MapScriptInclude</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy>read</sys_policy>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_script_include_559edacadb3ef20087c1fd441d96193e</sys_update_name>
-        <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-27 09:19:05</sys_updated_on>
+        <sys_updated_by>sush.chandrashekar</sys_updated_by>
+        <sys_updated_on>2017-07-05 17:17:36</sys_updated_on>
     </sys_script_include>
 </record_update>
