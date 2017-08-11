@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>Discover City Guide Events</name>
+        <run_as display_value="Tom Cullen">1c0915f8db767200c3beffa31d961914</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2017-07-19 11:45:45</run_start>
+        <run_time>1970-01-01 08:02:15</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[//////////////////////////////////////////////////////////////////////////////
+//
+// Discover and Create Site and Event Data
+//
+//////////////////////////////////////////////////////////////////////////////
+discoverEvents("110", "today", "Food Today");
+discoverEvents("110", "this_week", "Food this_week");
+discoverEvents("110", "this_weekend", "Food this_weekend");
+discoverEvents("110", "this_month", "Food this_month");
+discoverEvents("110", "next_month", "Food next_month");
+
+discoverEvents("103", "today", "Music Today");
+discoverEvents("103", "this_week", "Music this_week");
+discoverEvents("103", "this_weekend", "Music this_weekend");
+discoverEvents("103", "this_month", "Music this_month");
+discoverEvents("103", "next_month", "Music next_month");
+
+discoverEvents("108", "today", "Sports Today");
+discoverEvents("108", "this_week", "Sports this_week");
+discoverEvents("108", "this_weekend", "Sports this_weekend");
+discoverEvents("108", "this_month", "Sports this_month");
+discoverEvents("108", "next_month", "Sports next_month");
+
+discoverEvents("104,105", "today", "Drama Today");
+discoverEvents("104,105", "this_week", "Drama this_week");
+discoverEvents("104,105", "this_weekend", "Drama this_weekend");
+discoverEvents("104,105", "this_month", "Drama this_month");
+discoverEvents("104,105", "next_month", "Drama next_month");
+
+discoverEvents("109", "today", "Nature Today");
+discoverEvents("109", "this_week", "Nature this_week");
+discoverEvents("109", "this_weekend", "Nature this_weekend");
+discoverEvents("109", "this_month", "Nature this_month");
+discoverEvents("109", "next_month", "Nature next_month");
+
+//createEvents();
+
+function discoverEvents(e_type, e_keyword, e_comments) {
+	
+	var gr = new GlideRecord('x_snc_googlemaps_p_x_snc_googlemaps_place_utility');
+	gr.initialize();
+	gr.event_type = e_type;
+	gr.sites_created = 0;
+	gr.event_count = 0;
+	gr.location = "40.6452228,-74.0150373";
+	gr.start_date_keyword = e_keyword;
+	gr.discovery_comments = "discoverEvents generated: " + e_comments;
+	gr.googlemaps_request_type = "getEvents";
+	gr.insert();
+}
+
+function createEvents() {
+	
+	var processEventsQuery = "result=Success^sites_created=0^googlemaps_request_type=getEvents";
+	var gr = new GlideRecord('x_snc_googlemaps_p_x_snc_googlemaps_place_utility');
+	gr.addEncodedQuery(processEventsQuery);
+	gr.query();
+	while (gr.next()) {
+		gs.info('gr.number = ' + gr.number);
+		var ce = new x_snc_googlemaps_p.generateEvents();
+		ce.createEvents(gr);
+	}
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-07-19 11:46:38</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>12d2ffa5db408300d6afffb41d9619c7</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>Discover City Guide Events</sys_name>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sysauto_script_12d2ffa5db408300d6afffb41d9619c7</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-07-24 20:58:34</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

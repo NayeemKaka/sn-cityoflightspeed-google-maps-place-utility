@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_snc_googlemaps_p.generateEvents</api_name>
+        <client_callable>false</client_callable>
+        <description>Called from Scheduled Script Execution (     ).   Run daily to discover new events for Food, Music, Sports, Drama, and Nature.&#13;
+Each event type is paired with an event date  (Today, This Week, This Weekend, This Month, and Next Month).&#13;
+&#13;
+If a duplicate site or event is discovered, it is skipped.</description>
+        <name>generateEvents</name>
+        <script><![CDATA[var generateEvents = Class.create();
+generateEvents.prototype = {
+	initialize: function() {
+	},
+	
+	createEvents : function (current) {
+		// get the place_id count
+		var place_count = 0;
+		place_count = (current.returned_raw_data.match(/venue_id/g) || []).length;
+		var created_count = 0;
+		var skipped_count = 0;
+		var events_created = 0;
+		
+		// convert the data back to json for parsing
+		var jsonData  = JSON.parse(current.returned_raw_data);
+		
+		//Loop through the data and create or update the sites
+		//and events.  Different from Refresh City Sites .. the list
+		//we are looping through are events.  We need to check the venue_id
+		//against the guide_sites table and create or update, then we can add
+		//the event.
+		
+		for(var i=0;i<place_count;i++) {
+			var lkup = new GlideRecord('x_snc_guide_site');
+			lkup.addQuery('g_place_id', jsonData.events[i].venue_id);
+			lkup.setLimit(1);
+			lkup.query();
+			lkup.next();
+			if (lkup.sys_id) {
+				//   site found - skip record - save the api call (for now)
+				
+				lkup.update();
+				skipped_count++;
+				// Do NOT create Events for UPDATE
+				//if (current.create_events) {
+					//	createEvents(lkup);
+					//}
+				} else {
+					//   No site .. creat one
+					//   First we need the venue details from Eventbrite
+					var msi = new MapScriptInclude();
+					var venue_data = msi.getEventVenue(jsonData.events[i].venue_id);
+					// convert the data back to json for parsing
+					var venue_data_json = JSON.parse(venue_data);
+					
+					//  logo id is not always provided - check for null
+					var media_photo;
+					if (jsonData.events[i].logo) {
+						var media_data = msi.getEventMedia(jsonData.events[i].logo.id);
+						var media_data_json = JSON.parse(media_data);
+						media_photo = media_data_json.url;
+					} else {
+						media_photo = 'null logo';
+					}
+					
+					var gr = new GlideRecord('x_snc_guide_site');
+					gr.initialize();
+					gr.description = 'Created by : ' + current.discovery_comments + '\nGoogleMaps Eventbrite Query number: ' + current.number;
+					gr.type = current.type;
+					gr.location = venue_data_json.address.localized_address_display;
+					gr.g_vicinity = venue_data_json.address.localized_address_display;
+					gr.name = venue_data_json.name;
+					// google added fields - match Eventbrite fields
+					gr.g_name = venue_data_json.name;
+					gr.g_place_id = venue_data_json.id;
+					gr.g_location = venue_data_json.latitude + ',' + venue_data_json.longitude;
+					gr.g_site_google_url = jsonData.events[i].url;
+					gr.eventbrite_created = 'true';
+					
+					gr.insert();
+					created_count++;
+					// Now create the event for this site
+					createEvents(gr, i, media_photo);
+					
+				}
+				
+			}
+			
+			//Update the GoogleMap Place query record ..
+			current.sites_created = created_count;
+			current.sites_skipped = skipped_count;
+			current.event_count = events_created;
+		    current.result = "Complete";
+			current.update();
+			
+			function createEvents(site, j, photo_url_raw) {
+				var ev = new GlideRecord('x_snc_guide_event');
+				ev.initialize();
+				ev.name = jsonData.events[j].name.text;
+				ev.site = site.sys_id;
+				// events are created 'Active/Draft'
+				// workflow inspects and changes state accordingly
+				ev.active = true;
+				ev.state = 'Draft';
+				if (jsonData.events[j].is_free) {
+					ev.cost = '0';
+				} else {
+					//  random generate cost between $1.00 and $50.00
+					ev.cost = getRandomInt(1,50);
+				}
+				ev.description = jsonData.events[j].description.text;
+				ev.end_date = jsonData.events[j].end.local;
+				ev.start_date = jsonData.events[j].start.local;
+				ev.url = jsonData.events[j].url;
+				ev.eb_event_id = jsonData.events[j].id;
+				ev.eb_category_id = jsonData.events[j].category_id;
+				ev.eb_subcategory_id = jsonData.events[j].subcategory_id;
+				
+				loadType(ev.eb_category_id.toString(), ev);
+				
+				//we passed in a photo from our media api call ..
+				//The image comes in with a "https://img.evbuc.com/" prefix so we need to strip it out
+				//on an error .. the grand-opening picture will be on the event  (this shouldn't happen)
+				var p_len = photo_url_raw.length;
+				var photo_url = photo_url_raw.slice(22, p_len);
+				try {
+					if(photo_url) {
+						ev.photo_url = photo_url;
+					} else {
+						ev.photo_url = 'events-placeholder.png';
+					}
+				}
+				catch(err){
+					ev.photo_url = 'events-placeholder.png';
+				}
+				
+				//insert the Event
+				ev.insert();
+				events_created++;
+				
+			}
+			
+			function loadType(eb_category, evRec) {
+				
+				switch (eb_category) {
+					case "103":
+					evRec.type = 'Music';
+					evRec.type_list = '3e506969dbfab20087c1fd441d9619ac';   //type = 'live music'
+					break;
+					case "105":
+					evRec.type = 'Drama';
+					evRec.type_list = 'eb106969dbfab20087c1fd441d96196d';   //type = 'Drama'
+					break;
+					case "110":
+					evRec.type =  'Food';
+					evRec.type_list = '53b1e1a9dbfab20087c1fd441d961947';   //type = '  Food'
+					break;
+					case "108":
+					evRec.type = 'Sports';
+					evRec.type_list = '50de1929dbfab20087c1fd441d96198f';   //type = 'sports & recreation'
+					break;
+					case "109":
+					evRec.type = 'Nature';
+					evRec.type_list = 'dc1161a9dbfab20087c1fd441d96199a';   //type = 'Nature'
+					break;
+					default:
+					evRec.type_list = 'eb106969dbfab20087c1fd441d96196d,53b1e1a9dbfab20087c1fd441d961947,50de1929dbfab20087c1fd441d96198f'; // type = 'Exhibition,Food & Drink
+					break;
+					
+				}
+				
+			}
+			
+			// Returns a random integer between min (included) and max (included)
+			function getRandomInt(min, max) {
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
+			
+		},
+		
+		type: 'generateEvents'
+	};
+	
+	
+	
+	]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-07-19 10:40:01</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>11c363eddb008300d6afffb41d961947</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>generateEvents</sys_name>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sys_script_include_11c363eddb008300d6afffb41d961947</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-07-19 11:45:14</sys_updated_on>
+    </sys_script_include>
+</record_update>

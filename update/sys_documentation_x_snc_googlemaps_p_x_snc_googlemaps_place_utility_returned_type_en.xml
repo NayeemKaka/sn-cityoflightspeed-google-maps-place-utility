@@ -12,7 +12,7 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>tom.cullen</sys_created_by>
             <sys_created_on>2017-06-24 14:13:13</sys_created_on>
-            <sys_customer_update>true</sys_customer_update>
+            <sys_customer_update>false</sys_customer_update>
             <sys_id>b2d4aba5dba7320087c1fd441d9619cb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Returned type</sys_name>

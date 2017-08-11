@@ -10,7 +10,7 @@
         <sys_class_name>sys_atf_step</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-06-27 13:48:55</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>f3ebbe6edb23b20087c1fd441d96193f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Open a New Form</sys_name>

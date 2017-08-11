@@ -21,8 +21,7 @@
         <name>Refresh EventBrite Sites and Events</name>
         <onclick/>
         <order>-500</order>
-        <script><![CDATA[
-// get the place_id count
+        <script><![CDATA[// get the place_id count
 var place_count = 0;
 var place_count = (current.returned_raw_data.match(/venue_id/g) || []).length;
 var created_count = 0;
@@ -98,6 +97,7 @@ for(var i=0;i<place_count;i++) {
 	current.sites_created = created_count;
 	current.sites_skipped = skipped_count;
 	current.event_count = events_created;
+	current.result = "Complete";
 	current.update();
 	
 	function createEvents(site, j, photo_url_raw) {
@@ -194,7 +194,7 @@ for(var i=0;i<place_count;i++) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a6fdfd16db07fa0087c1fd441d96190e</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>33</sys_mod_count>
         <sys_name>Refresh EventBrite Sites and Events</sys_name>
         <sys_overrides/>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
@@ -203,7 +203,7 @@ for(var i=0;i<place_count;i++) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sys_ui_action_a6fdfd16db07fa0087c1fd441d96190e</sys_update_name>
         <sys_updated_by>tom.cullen</sys_updated_by>
-        <sys_updated_on>2017-06-15 11:13:50</sys_updated_on>
+        <sys_updated_on>2017-07-19 11:12:23</sys_updated_on>
         <table>x_snc_googlemaps_p_x_snc_googlemaps_place_utility</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

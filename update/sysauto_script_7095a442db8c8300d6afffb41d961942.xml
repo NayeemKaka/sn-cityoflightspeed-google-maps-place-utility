@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>Flag Today's Featured Events</name>
+        <run_as display_value="Tom Cullen">1c0915f8db767200c3beffa31d961914</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2017-07-20 10:05:52</run_start>
+        <run_time>1970-01-01 08:04:15</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[//////////////////////////////////////////////////////////////////////////////
+//
+// Flag Today's Featured Events
+//
+//////////////////////////////////////////////////////////////////////////////
+
+var getEventsQuery = "state=Active^featured=false^start_dateONToday@javascript:gs.daysAgoStart(0)@javascript:gs.daysAgoEnd(0)^cost>javascript:global.getCurrencyFilter('x_snc_guide_event','cost', 'USD;0')";
+//The query above selects events that have a start date = today, and cost > 0
+var gr = new GlideRecord('x_snc_guide_event');
+gr.addEncodedQuery(getEventsQuery);
+gr.orderByDesc('cost');
+gr.query();
+var count = 0;
+while (gr.next()) {
+//Flag the top 5 events (by cost)
+  if (count<5) {
+    gr.featured = true;
+    gr.update();
+    count++;
+  }
+}
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>tom.cullen</sys_created_by>
+        <sys_created_on>2017-07-20 10:07:27</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>7095a442db8c8300d6afffb41d961942</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Flag Today's Featured Events</sys_name>
+        <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
+        <sys_update_name>sysauto_script_7095a442db8c8300d6afffb41d961942</sys_update_name>
+        <sys_updated_by>tom.cullen</sys_updated_by>
+        <sys_updated_on>2017-07-24 21:00:24</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

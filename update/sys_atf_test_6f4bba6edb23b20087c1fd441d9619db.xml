@@ -8,7 +8,7 @@
         <sys_class_name>sys_atf_test</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-06-27 13:47:48</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>6f4bba6edb23b20087c1fd441d9619db</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>googleMaps Place Utility TEST 1</sys_name>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <record_update table="sysauto_script">
     <sysauto_script action="INSERT_OR_UPDATE">
-        <active>false</active>
+        <active>true</active>
         <condition/>
         <conditional>false</conditional>
         <name>RUN ME FIRST - City Guide Site/Event load</name>
@@ -18,218 +18,74 @@
 // Create sample Site and Event Data
 //
 //////////////////////////////////////////////////////////////////////////////
+discoverEvents("110", "today", "Food Today");
+discoverEvents("110", "this_week", "Food this_week");
+discoverEvents("110", "this_weekend", "Food this_weekend");
+discoverEvents("110", "this_month", "Food this_month");
+discoverEvents("110", "next_month", "Food next_month");
 
-//1 - Food
-createSiteEvent(
-'Brooklyn Navy Yard Center at BLDG 92 - TC-',
-'15447308',
-'40.7034557,-73.97177959999999',
-'https://www.eventbrite.com/e/whiskey-wars-factory-tours-tickets-34868986076?aff=ebapi',
-'63 Flushing Ave at the intersect',
-'Whiskey Wars Factory Tours!',
-'47',
-'In the 19th century, Marines were dispatched from the Navy Yard to crack down on illegal whiskey distilling in what became known as the WHISKEY WARS.',
-'https://www.eventbrite.com/e/whiskey-wars-factory-tours-tickets-34868986076?aff=ebapi',
-'34868986076',
-'Food',
-'110',
- '53b1e1a9dbfab20087c1fd441d961947',	
-'https://cdn.evbuc.com/images/31746148/18589607695/1/original.jpg?rect=0%2C974%2C2668%2C1334&s=758173ed45ef0a13d70570eb96b0598c'
-);
-createSiteEvent(
-'28 Liberty - TC-',
-'19007097',
-'40.7078315,-74.00873580000001',
-'https://www.eventbrite.com/e/good-beer-tickets-33310659078?aff=ebapi',
-'28 Liberty Street, New York, NY 10005',
-'Good Beer',
-'14',
-'This year, were taking Good Beer outside to the plaza. What can you expect? A breezy walk-around tasting where youll sample cold brews, hearty food and a mix of other delicious offerings in between, all included in the price of your ticket. Never been to Good Beer? Check out this wrap-up from last years event for a sense of what you can look forward to at this years installment. Be sure to check out the growing list of 2017 participants. Cheers!',
-'https://www.eventbrite.com/e/good-beer-tickets-33310659078?aff=ebapi',
-'33310659078',
-'Food',
-'110',
- '53b1e1a9dbfab20087c1fd441d961947',	
-'https://cdn.evbuc.com/images/29886902/110950509785/1/original.jpg?rect=31%2C241%2C528%2C264&s=416d7fa739288c786bfb0161d5561123'
-);
-//2 - Music
-createSiteEvent(
-'Pier 36 New York - TC-',
-'19372224',
-'40.70961339999999,-73.9864715',
-'https://www.eventbrite.com/e/after-work-on-the-water-tickets-34088079363?aff=ebapi',
-'299 South Street, New York, NY 10002',
-'AFTER WORK ON THE WATER',
-'32',
-'WELCOME TO OUR AFTER WORK ON THE WATER EVENT, EVERY OTHER THURSDAY.  STARTING, JUNE 15 THRU OCT0BER 26, 2017.  OUR GRAND OPENING, INCLUDES LIVE PERFORMACES BY FREESTYLE ARTIST SOAVE SINGING HIS SMASH HIT (CRYING OVER YOU), LYDIA LEE (DONT TAKE YOUR LOVE) AND THE ONE AND ONLY SPEEDY,  THE WEPPA MAN HIMSELF WILL BE ABOARD.',
-'https://www.eventbrite.com/e/after-work-on-the-water-tickets-34088079363?aff=ebapi',
-'34088079363',
-'Music',
-'103',
- '3e506969dbfab20087c1fd441d9619ac',	
-'https://cdn.evbuc.com/images/31159008/211368237615/1/original.jpg?rect=0%2C87%2C512%2C256&s=72b9dbb23399349d102c2e99f50ec903'
-);
-createSiteEvent(
-'Milk River - TC-',
-'19255877',
-'40.680362,-73.96241900000001',
-'https://www.eventbrite.com/e/goddess-media-presents-luminary-music-series-an-independent-artist-monthly-live-concert-networking-tickets-33829061634?aff=ebapi',
-'960 Atlantic Avenue , Brooklyn, NY 11238',
-'Goddess Media Presents: Luminary Music Series - Independent Artist Monthly',
-'2',
-'The Luminary Music Series is a monthly, live concert series offering a platform to connect passionate and serious independent artists to a diverse audience. The platform is also an opportunity to expand artists current professional industry networks. These include music gurus, executives, producers, artists and media- to name a few.',
-'https://www.eventbrite.com/e/goddess-media-presents-luminary-music-series-an-independent-artist-monthly-live-concert-networking-tickets-33829061634?aff=ebapi',
-'33829061634',
-'Music',
-'103',
- '3e506969dbfab20087c1fd441d9619ac',	
-'https://cdn.evbuc.com/images/31362784/148956914248/1/original.jpg?rect=0%2C14%2C300%2C150&s=1ad8f20aa89f1428db670a8afdcda62d'
-);
-//3 - Drama
-createSiteEvent(
-'Terry Knickerbocker Studio - TC-',
-'19849958',
-'40.6570291,-74.00622929999997',
-'https://www.eventbrite.com/e/terry-knickerbocker-studios-summer-intensive-tickets-35061135801?aff=ebapi',
-'68 34th St. C404, Brooklyn, NY 11232',
-'Terry Knickerbocker Studios Summer Intensive!',
-'21',
-'How are you going to spend your summer? Use this summer to prepare for your next artistic challenge, and deepen your roots as an actor in NYC. Call us today to talk about your artistic journey: 718.801.8999',
-'https://www.eventbrite.com/e/terry-knickerbocker-studios-summer-intensive-tickets-35061135801?aff=ebapi',
-'35061135801',
-'Drama',
-'105',
- 'eb106969dbfab20087c1fd441d96196d',	
-'https://cdn.evbuc.com/images/31993730/209866863049/1/original.jpg?rect=0%2C117%2C2048%2C1024&s=8ddc50ef66a800cab14d378517c8fe47'
-);
-createSiteEvent(
-'Gelsey Kirkland - TC-',
-'19459242',
-'40.7041293,-73.9863995',
-'https://www.eventbrite.com/e/the-generative-dancer-black-radical-traditions-of-practice-thought-tickets-32663361995?aff=ebapi',
-'29 Jay Street, Brooklyn, NY 11201',
-'The Generative Dancer - Black Radical Traditions of Practice & Thought',
-'36',
-'"The Generative Dancer - Black Radical Traditions of Practice & Thought - this workshop is designed to be a full day experience from 10 - 6pm for intermediate/advanced choreographers and performers who want to deepen their practice through participation in an immersive learning environment.',
-'https://www.eventbrite.com/e/the-generative-dancer-black-radical-traditions-of-practice-thought-tickets-32663361995?aff=ebapi',
-'32663361995',
-'Drama',
-'105',
- 'eb106969dbfab20087c1fd441d96196d',	
-'https://cdn.evbuc.com/images/29698100/48101024606/1/original.jpg?rect=0%2C12%2C560%2C280&s=64e4144ad4025cedb8070c5a7665060f'
-);
-//4 - Sports
-createSiteEvent(
-'BRIC Arts | Media House - TC-',
-'16350942',
-'40.688553,-73.97899899999999',
-'https://www.eventbrite.com/e/lunchtime-yoga-and-live-music-with-bend-bloom-tickets-34864883806?aff=ebapi',
-'647 Fulton Street, Brooklyn, NY 11217',
-'Lunchtime Yoga and Live Music with Bend + Bloom',
-'0',
-'"Lunchtime yoga is back! Transcend your own body with these FREE mixed-level Vinyasa Flow yoga classes, taking place on Fridays from 1-2pm, co-presented by Bend + Bloom Yoga and featuring a different musical accompaniment each week! These are mixed-level classes for beginners to advanced practitioners, but some basic experience with yoga is suggested. Class is for adults and teens only - no children or babies please.',
-'https://www.eventbrite.com/e/lunchtime-yoga-and-live-music-with-bend-bloom-tickets-34864883806?aff=ebapi',
-'34864883806',
-'Sports',
-'108',
- '50de1929dbfab20087c1fd441d96198f',	
-'https://cdn.evbuc.com/images/31740981/113980723835/1/original.jpg?rect=0%2C428%2C2500%2C1250&s=e63c184a198e41cf36ce6e5eed5a226f'
-);
-//5 - Nature
-createSiteEvent(
-'Marine Park - TC-',
-'19552608',
-'40.6119911,-73.93304289999998',
-'https://www.eventbrite.com/e/brooklyn-marine-park-photography-nature-walk-tickets-34492572212?aff=ebapi',
-'New York, NY',
-'Brooklyn: Marine Park Photography & Nature Walk',
-'32',
-'Brooklyns Marine Park is an under-visited inlet off of Jamaica Bay. Shorebirds, herons, egrets, geese, gulls and ducks are the residents here. American Oystercatchers should entertain us. Rare birds have shown up here, so, you never know. And its the end of Horseshoe Crab season, so we may see egg-laying evidence on the beach.',
-'https://www.eventbrite.com/e/brooklyn-marine-park-photography-nature-walk-tickets-34492572212?aff=ebapi',
-'34492572212',
-'Nature',
-'109',
- 'dc1161a9dbfab20087c1fd441d96199a',	
-'https://cdn.evbuc.com/images/31258177/177717432406/1/original.jpg?rect=0%2C742%2C4000%2C2000&s=a4992384512cdbc7dcfd18a27854c964'
-);
+discoverEvents("103", "today", "Music Today");
+discoverEvents("103", "this_week", "Music this_week");
+discoverEvents("103", "this_weekend", "Music this_weekend");
+discoverEvents("103", "this_month", "Music this_month");
+discoverEvents("103", "next_month", "Music next_month");
 
-//////////////////////////////////////////////////////////////////////////////
+discoverEvents("108", "today", "Sports Today");
+discoverEvents("108", "this_week", "Sports this_week");
+discoverEvents("108", "this_weekend", "Sports this_weekend");
+discoverEvents("108", "this_month", "Sports this_month");
+discoverEvents("108", "next_month", "Sports next_month");
 
-function createSiteEvent(s_name, s_placeId, s_location, s_url, s_vinicity,
-e_name, e_cost, e_description, e_url, eb_eventId, 
-e_type, e_category, e_typelist, e_photoUrl) {
-	var gr = new GlideRecord('x_snc_guide_site');
+discoverEvents("104,105", "today", "Drama Today");
+discoverEvents("104,105", "this_week", "Drama this_week");
+discoverEvents("104,105", "this_weekend", "Drama this_weekend");
+discoverEvents("104,105", "this_month", "Drama this_month");
+discoverEvents("104,105", "next_month", "Drama next_month");
+
+discoverEvents("109", "today", "Nature Today");
+discoverEvents("109", "this_week", "Nature this_week");
+discoverEvents("109", "this_weekend", "Nature this_weekend");
+discoverEvents("109", "this_month", "Nature this_month");
+discoverEvents("109", "next_month", "Nature next_month");
+
+setTimeout(function() {
+	createEvents();
+}, 5000);
+
+createEvents();
+
+function discoverEvents(e_type, e_keyword, e_comments) {
+
+	var gr = new GlideRecord('x_snc_googlemaps_p_x_snc_googlemaps_place_utility');
 	gr.initialize();
-	gr.description = 'Created by: Run_me_first fixscript';
-	gr.eventbrite_created = 'true';
-	gr.name = s_name;
-	gr.g_name = gr.name;
-	gr.g_place_id = s_placeId;
-	gr.g_location = s_location;
-	gr.g_site_google_url = s_url;
-	gr.g_vicinity = s_vinicity;
-	gr.location = gr.g_vicinity;
+	gr.event_type = e_type;
+	gr.sites_created = 0;
+	gr.event_count = 0;
+	gr.location = "40.6452228,-74.0150373";
+	gr.start_date_keyword = e_keyword;
+	gr.discovery_comments = "discoverEvents generated: " + e_comments;
+	gr.googlemaps_request_type = "getEvents";
 	gr.insert();
-	
-	var ev = new GlideRecord('x_snc_guide_event');
-	ev.initialize();
-	ev.site = gr.sys_id;
-	ev.active = true;
-	ev.state = 'Draft';
-	ev.start_date = getRandomDate();
-	ev.end_date = getRandomEndDate(ev.start_date);
-	ev.name = e_name;
-	ev.cost = e_cost;
-	ev.description = e_description;
-	ev.url = e_url;
-	ev.eb_event_id = eb_eventId;
-	ev.type = e_type;
-	//loadCatTypeList(ev.type, ev);
-	ev.eb_category_id = e_category;
-	ev.type_list = e_typelist;
-	ev.photo_url = e_photoUrl;
-	ev.insert();
 }
 
-//
-// returns a random date.  if less than june ups the year.
-//
-function getRandomDate() {
-	var month = getRandomInt(1,12);
-	var day = getRandomInt(1,28);
-	var year = '2017';
-	if (month<6) {
-		year = '2018';
+function createEvents() {
+
+	var processEventsQuery = "result=Success^sites_created=0^googlemaps_request_type=getEvents";
+	var gr = new GlideRecord('x_snc_googlemaps_p_x_snc_googlemaps_place_utility');
+	gr.addEncodedQuery(processEventsQuery);
+	gr.query();
+	while (gr.next()) {
+		gs.info('gr.number = ' + gr.number);
+		var ce = new x_snc_googlemaps_p.generateEvents();
+		ce.createEvents(gr);
 	}
-	mdate = month + '-' + day + '-' + year;
-	return mdate;
-}
-
-//
-// returns a random end date
-//
-function getRandomEndDate(startDt) {
-	var gdt = new GlideDateTime(startDt);
-	var days = getRandomInt(1, 7);
-	gdt.addDaysLocalTime(days);
-	var end_date = gdt.getDate();
-	return end_date;
-	
-}
-
-//
-// Returns a random integer between min (included) and max (included)
-//
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-]]></script>
+}]]></script>
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>tom.cullen</sys_created_by>
         <sys_created_on>2017-06-23 11:37:29</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>55c6f19ddba7f60087c1fd441d961975</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>RUN ME FIRST - City Guide Site/Event load</sys_name>
         <sys_package display_value="GoogleMaps Place Utility" source="x_snc_googlemaps_p">ea6b834d4fb6ba002d1d958f0310c733</sys_package>
         <sys_policy/>
@@ -237,7 +93,7 @@ function getRandomInt(min, max) {
         <sys_scope display_value="GoogleMaps Place Utility">ea6b834d4fb6ba002d1d958f0310c733</sys_scope>
         <sys_update_name>sysauto_script_55c6f19ddba7f60087c1fd441d961975</sys_update_name>
         <sys_updated_by>chuck.tomasi</sys_updated_by>
-        <sys_updated_on>2017-07-05 17:08:06</sys_updated_on>
+        <sys_updated_on>2017-08-11 13:37:03</sys_updated_on>
         <upgrade_safe>false</upgrade_safe>
     </sysauto_script>
 </record_update>
